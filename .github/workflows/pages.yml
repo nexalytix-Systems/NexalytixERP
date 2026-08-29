@@ -1,0 +1,48 @@
+name: Publicar Nexalytix
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Baixar o repositorio
+        uses: actions/checkout@v4
+
+      - name: Montar a pasta do site
+        run: |
+          mkdir -p _site
+          cp index.html manifest.json supabase.js _site/
+          cp *.png *.jpg _site/ 2>/dev/null || true
+          for f in _headers sw.js CNAME; do
+            [ -f "$f" ] && cp "$f" _site/
+          done
+          touch _site/.nojekyll
+          ls -la _site
+
+      - name: Preparar o Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empacotar o site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Publicar
+        id: deploy
+        uses: actions/deploy-pages@v4

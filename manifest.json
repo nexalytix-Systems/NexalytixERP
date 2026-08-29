@@ -1,0 +1,32 @@
+{
+  "name": "Nexalytix \u2014 plataforma de gest\u00e3o inteligente",
+  "short_name": "Nexalytix",
+  "description": "Plataforma de gest\u00e3o para cafeterias, confeitarias, restaurantes e redes de varejo.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0F2016",
+  "theme_color": "#0F2016",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "logo-icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo-icone.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo-icone.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
