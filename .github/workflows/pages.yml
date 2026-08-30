@@ -1,4 +1,4 @@
-name: Publicar Nexalytix
+name: Publicar NexaFlow
 
 on:
   push:

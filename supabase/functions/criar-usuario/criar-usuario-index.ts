@@ -1,5 +1,5 @@
 /* ==========================================================
-   NEXALYTIX — criar / alterar acesso do sistema
+   NEXAFLOW — criar / alterar acesso do sistema
    A chave de administrador do banco NAO pode ir para o navegador:
    com ela, qualquer cliente viraria admin de todas as redes.
    Entao a criacao de conta mora aqui, no servidor, e so aceita
@@ -12,11 +12,11 @@ const ANON  = Deno.env.get("SUPABASE_ANON_KEY")!;
 const ADMIN = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 /* IMPORTANTE: troque a primeira URL abaixo pelo endereço real onde o
-   Nexalytix vai ficar publicado (ex.: "https://SEU-USUARIO.github.io" ou
+   NexaFlow vai ficar publicado (ex.: "https://SEU-USUARIO.github.io" ou
    o seu domínio próprio). Sem isso, o navegador vai bloquear a criação
    de usuário por CORS. */
 const ORIGENS = [
-  "https://nexalytix-systems.github.io/NexalytixERP/",
+  "https://nexalytix-systems.github.io/NexalytixERP",
   "http://localhost:3000",
   "http://127.0.0.1:5500",
 ];

@@ -1,5 +1,5 @@
 /* ==========================================================
-   NEXALYTIX — Service Worker
+   NEXAFLOW — Service Worker
    O sistema ja vendia sem internet: a venda e gravada no aparelho e
    sobe depois. Faltava a parte mais boba e mais fatal — se alguem
    recarregasse a pagina com a internet fora, o navegador ia buscar o

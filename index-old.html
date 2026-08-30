@@ -33,7 +33,7 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="google" content="notranslate">
-<title>NexaFlow</title>
+<title>Nexalytix</title>
 <link rel="icon" type="image/png" sizes="512x512" href="logo-icone.png">
 <link rel="icon" type="image/png" sizes="192x192" href="logo-icone-192.png">
 <link rel="apple-touch-icon" href="logo-icone.png">
@@ -41,7 +41,7 @@
 <script>
 /* Guarda o sistema no aparelho. Sem isso, recarregar a pagina com a
    internet fora deixava a loja sem sistema — que era o unico momento
-   em que o NexaFlow realmente parava. */
+   em que o Nexalytix realmente parava. */
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
     navigator.serviceWorker.register('sw.js').catch(function(){});
@@ -49,8 +49,8 @@ if('serviceWorker' in navigator){
 }
 </script>
 <meta name="theme-color" content="#0b8a93">
-<meta name="apple-mobile-web-app-title" content="NexaFlow">
-<meta name="application-name" content="NexaFlow">
+<meta name="apple-mobile-web-app-title" content="Nexalytix">
+<meta name="application-name" content="Nexalytix">
 <!-- A biblioteca vem do PROPRIO repositorio, nao de CDN. O Edge bloqueava o
      unpkg como rastreador e o sistema simplesmente nao abria — e numa loja
      que voce nao controla, o antivirus ou a rede fariam o mesmo. Mesma
@@ -65,11 +65,11 @@ if(!window.supabase){
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* ---- DESIGN SYSTEM NEXAFLOW ----
+  /* ---- DESIGN SYSTEM NEXALYTIX ----
      Cores tiradas da própria marca: azul-marinho de base, verde-petróleo e teal
      como assinatura. Tudo no sistema lê destes tokens — mudar aqui muda todas
      as telas ao mesmo tempo, sem tocar em nenhuma função. */
-  /* ---- PALETA NEXAFLOW ----
+  /* ---- PALETA NEXALYTIX ----
      Quatro cores, quatro trabalhos, e ninguém usa cor por decoração:
        verde     — identidade e navegação (barras do sistema)
        dourado   — a ação principal
@@ -101,7 +101,7 @@ if(!window.supabase){
 }
 *{box-sizing:border-box;margin:0;padding:0}
 
-/* ====== DESIGN SYSTEM NEXAFLOW — componentes ======
+/* ====== DESIGN SYSTEM NEXALYTIX — componentes ======
    Regras de acabamento aplicadas por cima do que já existe. Nenhuma
    troca de marcação: só padroniza raio, altura, foco, densidade e rolagem. */
 
@@ -2061,7 +2061,7 @@ button.cxTag:hover{background:rgba(0,160,139,.26)}
 :root{
   /* Esta segunda folha reafinava as cores por cima da primeira e era ela que
      valia de verdade. Agora as duas falam a mesma língua: a paleta da marca. */
-  /* ---- PALETA NEXAFLOW ----
+  /* ---- PALETA NEXALYTIX ----
      Quatro cores, quatro trabalhos, e ninguém usa cor por decoração:
        verde     — identidade e navegação (barras do sistema)
        dourado   — a ação principal
@@ -2729,7 +2729,7 @@ table tbody tr:hover{background:var(--blue-soft)}
 img.orb{object-fit:contain;background:transparent!important;border-radius:22%}
 .appIco img{width:100%;height:100%;object-fit:contain;border-radius:inherit;display:block}
 
-/* ===== TELA DE ACESSO — arquivo oficial do NexaFlow =====
+/* ===== TELA DE ACESSO — arquivo oficial do Nexalytix =====
    Estilo do arquivo, com os seletores presos ao #login e as variáveis com
    prefixo lg- para não vazarem no resto do sistema. */
 #login{position:fixed;inset:0;z-index:500;overflow:auto}
@@ -7402,7 +7402,7 @@ code.lg2{background:var(--alt);border-radius:4px;padding:2px 7px;font-size:11.5p
 :root{
   /* Esta segunda folha reafinava as cores por cima da primeira e era ela que
      valia de verdade. Agora as duas falam a mesma língua: a paleta da marca. */
-  /* ---- PALETA NEXAFLOW ----
+  /* ---- PALETA NEXALYTIX ----
      Quatro cores, quatro trabalhos, e ninguém usa cor por decoração:
        verde     — identidade e navegação (barras do sistema)
        dourado   — a ação principal
@@ -12167,7 +12167,7 @@ code.lg2{background:var(--alt);border-radius:4px;padding:2px 7px;font-size:11.5p
   .mIco .tile{width:34px;height:34px;border-radius:10px}
   .mIco .lb{font-size:9.5px;max-width:66px}
 }
-/* ---- ajuste do NexaFlow: cabe em uma tela só ----
+/* ---- ajuste do Nexalytix: cabe em uma tela só ----
    O arquivo original usa 100vh no palco, cartão de altura mínima 650px e
    espaçamentos generosos — numa tela de notebook isso passa da janela e obriga
    a rolar para achar o botão. Aqui tudo encolhe junto com a altura disponível. */
@@ -12196,7 +12196,7 @@ code.lg2{background:var(--alt);border-radius:4px;padding:2px 7px;font-size:11.5p
 #login .message:empty{display:none}
 #login .mark{opacity:.11}
 
-/* ---- entrada da NexaFlow: o cartao mora na parte vazia da parede ----
+/* ---- entrada da Nexalytix: o cartao mora na parte vazia da parede ----
    A logo do letreiro ocupa a direita da foto. Antes o cartao caia no meio
    e cobria o letreiro. Aqui ele fica centralizado na metade esquerda,
    no meio da altura, e um pouco maior para nao parecer apertado.
@@ -12367,7 +12367,7 @@ body.semRolagem{overflow:hidden}
 
 <script>
 /* ==========================================================
-   NEXAFLOW
+   NEXALYTIX
    BLOCO 1  icones
    BLOCO 2  estrutura de modulos
    BLOCO 3  armazenamento (local por enquanto)
@@ -12555,7 +12555,7 @@ var MOD=[
  {id:'cfg-movimentacao',n:'Motivos de Baixa de Estoque'},
  {id:'areas-entrega',n:'Áreas de Entrega'},
  {id:'canais-integracao',n:'Canais de Venda e Integração'},
- {id:'cfg-gerente',n:'Assistente NexaFlow'},
+ {id:'cfg-gerente',n:'Assistente Nexalytix'},
  {id:'cfg-dre',n:'Configuração do DRE'},
  {id:'dados-fiscais',n:'Dados Fiscais da Empresa'},
  {id:'modelo-impressao',n:'Modelo de Impressão'},
@@ -12581,7 +12581,7 @@ var MOD=[
 /* ----------------------------------------------------------
    DOIS PAPEIS DIFERENTES
 
-   PLATAFORMA  — o dono da NexaFlow. Cuida do produto: infraestrutura,
+   PLATAFORMA  — o dono da Nexalytix. Cuida do produto: infraestrutura,
                  contas, servidores. NAO opera dados de cliente.
    FRANQUEADORA— o cliente que contratou. Manda na propria rede:
                  unidades, usuarios, dados, backup e importacao.
@@ -12602,7 +12602,7 @@ var SO_PLATAFORMA=['tecnico/central-tecnica','tecnico/instalacao','tecnico/diagn
    A franqueadora precisa cadastrar as proprias sucursais com todos os campos,
    e é esta a tela que faz isso. Ela passou para SO_FRANQUEADORA: continua
    fora do alcance de franqueado, e agora obedece a marcacao do contrato.
-   O que impede a franqueadora de ver os OUTROS clientes da NexaFlow nao é esta
+   O que impede a franqueadora de ver os OUTROS clientes da Nexalytix nao é esta
    lista — é o banco: painel_empresas() so devolve a propria loja para quem
    nao é plataforma. Trava no servidor, nao no menu. ========================================================== */
 /* ----------------------------------------------------------
@@ -12628,7 +12628,7 @@ function moduloContratado(mid){
   return c.modulos.indexOf(mid)>=0;
 }
 /* O contrato travava o modulo inteiro: ou o cliente tinha Relatorios, ou nao
-   tinha nenhum. Agora o dono da NexaFlow pode fechar telas soltas — o cliente
+   tinha nenhum. Agora o dono da Nexalytix pode fechar telas soltas — o cliente
    contrata Relatorios e o dono decide se Cancelamentos entra ou nao.
    Lista de bloqueio, e nao de liberacao: contrato antigo continua valendo. */
 function recursoContratado(mid,iid){
@@ -12641,11 +12641,11 @@ var SO_FRANQUEADORA=['loja/carga-inicial'];
 var MOD_PLATAFORMA=[];   /* V67: nenhum modulo bloqueado inteiro — o filtro fino e o SO_PLATAFORMA */
 /* ADM_MESTRE: e-mail do "dono da plataforma" com acesso garantido em qualquer
    instalação. Vem vazio por padrão nesta versão — preencha com o e-mail que
-   VOCÊ (dono do NexaFlow nesta instalação) usa para nunca ficar trancado
+   VOCÊ (dono do Nexalytix nesta instalação) usa para nunca ficar trancado
    fora, se quiser esse mecanismo. Deixe vazio para desativá-lo. */
 var ADM_MESTRE='';
 /* quem e a plataforma nao depende de marcacao guardada: e o login, e so ele.
-   Assim ninguem vira dono da NexaFlow copiando um usuario ou editando um cadastro. */
+   Assim ninguem vira dono da Nexalytix copiando um usuario ou editando um cadastro. */
 function ehPlataforma(u){
   u=u||usuarioLogado();
   return !!(u&&String(u.login||'').toLowerCase()===ADM_MESTRE);
@@ -12717,15 +12717,15 @@ var DB={categorias:[],produtos:[],grupos:[],fichas:[]};
    Todo o sistema chama apenas carregar() e salvar().
    Trocar de "aparelho" para "nuvem" nao mexe em mais nada.
    ---------------------------------------------------------- */
-/* ATENÇÃO — build de demonstração (NexaFlow / Doce Aroma):
+/* ATENÇÃO — build de demonstração (Nexalytix / Doce Aroma):
    a URL e a chave abaixo foram removidas de propósito. Este build NÃO deve
    apontar para o projeto Supabase de produção da Jolô. Antes de usar,
    crie um projeto Supabase de TESTE separado e preencha os valores abaixo
    (ou injete via variável de ambiente no build, conforme
    ARQUITETURA-TECNICA.md, seção 3). */
 var NUVEM={
-  url:'https://zgqzjorwbrfmueoptmpw.supabase.co',
-  chave:'',    // preencha com a chave "anon"/"publishable" (Project Settings → API) antes de publicar
+  url:'https://zgqzjorwbrfmueoptmpw.supabase.co',      // ex.: 'https://SEU-PROJETO-DE-TESTE.supabase.co'
+  chave:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpncXpqb3J3YnJmbXVlb3B0bXB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwMzQ2NzUsImV4cCI6MjEwMzYxMDY3NX0.5W5kbXO5-BC-pl5j_60ktB6C-2KzbaCNVW4CKJw2x8g',    // chave "anon"/"publishable" do projeto de TESTE, nunca a service_role
   cli:null, token:null, ligada:false, baixou:false, sujo:false, log:[], loja:null, perfil:null, sincronizando:false, pendente:false, ultima:null
 };
 /* ==========================================================
@@ -13263,7 +13263,7 @@ function logNuvem(txt,erro){
 }
 function semear(){
   /* Cliente novo nasce VAZIO. Sem ficha de exemplo, sem insumo de demonstracao,
-     sem nada. O NexaFlow e vendido para empresas diferentes: o que aparecer na tela
+     sem nada. O Nexalytix e vendido para empresas diferentes: o que aparecer na tela
      tem de ter sido cadastrado por aquela empresa, nunca inventado pelo sistema.
      Era a ficha 'f1' daqui que abria a porta para os semeadores de exemplo. */
   DB={categorias:[],produtos:[],grupos:[],fichas:[]};
@@ -14328,7 +14328,7 @@ async function sincronizar(){
       etapa=E2.tab;
       /* ------------------------------------------------------------------
          A CARTEIRA DE CLIENTES E DA PLATAFORMA, NAO DA LOJA.
-         clientes_parceiros guarda o contrato de cada empresa com a NexaFlow, e so
+         clientes_parceiros guarda o contrato de cada empresa com a Nexalytix, e so
          o dono grava nela. Mas a tabela estava no MAPA como qualquer outra,
          entao TODA loja tentava reenviar a propria linha a cada
          sincronizacao — e levava um "sem permissao" do banco, corretamente,
@@ -14603,7 +14603,7 @@ async function sincronizar(){
              pessoa cadastrava, a tela dizia salvo, o registro nunca subia e
              no download seguinte sumia. Ela conclui que o sistema comeu o
              dado — e conclui certo, do ponto de vista dela.
-             O caso mais comum e conta de plataforma (dono da NexaFlow) mexendo
+             O caso mais comum e conta de plataforma (dono da Nexalytix) mexendo
              em dado de loja: o banco recusa, e deve recusar mesmo. Mas
              precisa dizer isso em portugues, uma vez por sessao e por tabela,
              sem virar praga na tela. */
@@ -14770,7 +14770,7 @@ async function sincronizar(){
     await marcarVersaoAtual();
     backupDoDia();                 /* uma cópia por dia, sem travar nada */
   }catch(e){
-    console.error('[NEXAFLOW sync]',etapa,e);
+    console.error('[NEXALYTIX sync]',etapa,e);
     statusNuvem('erro',etapa+': '+((e&&e.message)||'falha'));
     console.error('SINCRONIZACAO falhou em',etapa,e);
     logNuvem('ERRO em '+etapa+': '+((e&&e.message)||'falha'),true);
@@ -15429,7 +15429,7 @@ function volta(linhas,fn,atual,col){
     ativo:x.ativo!==false}},null,'modelosImp');
 
   /* Estas duas subiam e nunca voltavam: trocar de aparelho ou limpar o
-     navegador perdia os usuarios e a carteira de clientes NexaFlow. */
+     navegador perdia os usuarios e a carteira de clientes Nexalytix. */
   try{
     var us=await baixarTab('usuarios_sistema', 'usuarios_sistema'+qs+'&order=nome');
     if(us&&us.length)DB.usuarios=volta(us,function(x){return {id:x.ref_local||x.id,
@@ -16004,7 +16004,7 @@ var _minhaAba=String(Date.now())+'-'+Math.random().toString(36).slice(2,7);
     localStorage.setItem('app_aba',_minhaAba);
     window.addEventListener('storage',function(e){
       if(e.key==='app_aba'&&e.newValue&&e.newValue!==_minhaAba){
-        alertaGravacao('A NexaFlow foi aberta em outra aba ou janela. Para não gravar '+
+        alertaGravacao('A Nexalytix foi aberta em outra aba ou janela. Para não gravar '+
           'um por cima do outro, use apenas uma — feche esta ou recarregue depois '+
           'de fechar a outra.');
       }
@@ -16188,7 +16188,7 @@ async function entrarPeloAuth(lg,sn){
 
   /* ==========================================================
      MODO PLATAFORMA
-     O dono da NexaFlow nao pertence a loja nenhuma. Amarra-lo a uma loja foi o
+     O dono da Nexalytix nao pertence a loja nenhuma. Amarra-lo a uma loja foi o
      que fez todo cliente novo nascer dentro do primeiro: quem cadastra de
      dentro de uma empresa cadastra PARA aquela empresa.
      Perfil sem loja e com cargo 'plataforma' entra em modo plataforma: nao
@@ -16413,7 +16413,7 @@ function boot(){
       comSaldo:(DB.estoqueUn||[]).filter(function(x){
         return Number(x&&x.estoque)!==0}).length};
   }catch(e){ _quieto(e,'boot'); }
-  aplicarLayoutMenu();          /* ordem salva pelo dono da NexaFlow */
+  aplicarLayoutMenu();          /* ordem salva pelo dono da Nexalytix */
   baixarLayoutMenu();
   topo();faixa();
   try{vigiarConteudo()}catch(e){_quieto(e,'boot')}   /* a tela para de subir sozinha */
@@ -16423,8 +16423,8 @@ function boot(){
 if(modo()==='nuvem'&&!NUVEM.ligada)setTimeout(function(){toast('Nuvem estava ligada: entre novamente em Banco de dados.')},900);}
 
 function topo(){
-$('hdr').innerHTML='<img class="hMk" src="logo-icone.png" alt="NexaFlow">'+
-  '<div class="hNm">NEXAFLOW</div><div class="hGrow"></div>'+
+$('hdr').innerHTML='<img class="hMk" src="logo-icone.png" alt="Nexalytix">'+
+  '<div class="hNm">NEXALYTIX</div><div class="hGrow"></div>'+
 '<button class="hSearch" onclick="paleta()">'+sv('search',15)+'<span>Buscar no sistema</span><kbd>Ctrl K</kbd></button>'+
 '<button class="hIc" onclick="toast(\'Nenhuma notificação no momento.\')">'+sv('bell',18)+'<span class="hBadge">0</span></button>'+
 '<span class="rtTag" id="rtTag"><i></i>tempo real</span>'+
@@ -16439,7 +16439,7 @@ $('hdr').innerHTML='<img class="hMk" src="logo-icone.png" alt="NexaFlow">'+
      Ser matriz e posicao; ver todas as telas e permissao. Sao coisas
      diferentes desde a V73, e este rotulo tinha ficado para tras.
      ========================================================== */
-  var pp=ehPlataforma()?'dono da NexaFlow'
+  var pp=ehPlataforma()?'dono da Nexalytix'
     :(ehFranqueadora(u)?('matriz — '+((u.tudo||u.mestre)?'acesso total':'franqueadora'))
     :(u.sucursais&&u.sucursais.length?'unidade':'acesso limitado'));
   return '<div class="hUsr"><div class="hAv">'+E((u.nome||'?').charAt(0).toUpperCase())+'</div>'+
@@ -16657,10 +16657,10 @@ $('stat').innerHTML='<span class="live" id="nuvemSt"><i></i>'+(NUVEM.ligada
   :'SALVO SÓ NESTE APARELHO')+'</span><span>|</span>'+
 '<span class="soPC">Loja: <b>'+E(nomeLojaAtual())+'</b></span><span class="soPC">|</span>'+
 '<span class="soPC">Usuário: <b>'+E((usuarioLogado()||{}).login||(usuarioLogado()||{}).nome||'—')+'</b>'+
-  (ehPlataforma()?' <em style="color:var(--acc)">(dono da NexaFlow)</em>':'')+'</span>'+
+  (ehPlataforma()?' <em style="color:var(--acc)">(dono da Nexalytix)</em>':'')+'</span>'+
 (extra?'<span class="soPC">|</span><span class="soPC">'+extra+'</span>':'')+
 '<span class="gw"></span><span class="logo soPC">'+
- '<img src="logo-icone.png" alt="" class="logoIco">NEXAFLOW</span>'+
+ '<img src="logo-icone.png" alt="" class="logoIco">NEXALYTIX</span>'+
 '<span class="verTag" onclick="location.reload(true)" title="clique para buscar a versão mais nova">'+VERSAO+'</span>';
 }
 
@@ -16823,7 +16823,7 @@ function cronometrar(rot, fn){
         'tela levou '+reg.total+' ms ('+reg.js+' ms de cálculo, '+
         reg.desenho+' ms de desenho)', {situacao:'medido'});
       try{ if(window.console)
-        console.log('[NexaFlow] '+rot+': '+reg.total+' ms — cálculo '+reg.js+
+        console.log('[Nexalytix] '+rot+': '+reg.total+' ms — cálculo '+reg.js+
                     ' ms, desenho '+reg.desenho+' ms'); }
       catch(e){ _quieto(e,'cronometrar'); }
       /* mostra o numero NA TELA, no rodape, quando passa de meio segundo.
@@ -17025,7 +17025,7 @@ if(mid==='estoque'&&iid==='ingredientes-insumos')return telaInsumos();
 if(mid==='estoque'&&iid==='grupo-ingredientes')return telaGruposIng();
 if(it)return telaConstrucao(mid,iid);
 $('content').innerHTML='<div class="brandBg">'+
- '<img class="orb" src="logo-icone.png" alt="NexaFlow"><h2>NexaFlow</h2>'+
+ '<img class="orb" src="logo-icone.png" alt="Nexalytix"><h2>Nexalytix</h2>'+
 '<p>gestão simples, lucro visível</p><div class="hint">'+
 (m?'Selecione um item de <b>'+E(m.n)+'</b>':'Clique em um ícone acima')+'</div></div>';
 rodape();
@@ -17716,7 +17716,7 @@ async function excluirGrupo(id){
 /* ---------- CÓPIA DE SEGURANÇA ---------- */
 function exportarDados(){
   try{
-    var pacote={sistema:'NEXAFLOW',versao:1,quando:new Date().toISOString(),dados:DB};
+    var pacote={sistema:'NEXALYTIX',versao:1,quando:new Date().toISOString(),dados:DB};
     var txt=JSON.stringify(pacote,null,1);
     var blob=new Blob([txt],{type:'application/json'});
     var a=document.createElement('a');
@@ -17748,7 +17748,7 @@ async function importarDados(input){
       abrir('cardapio','cfg-cardapio');
       toast('Dados restaurados: '+DB.produtos.length+' produtos, '+DB.categorias.length+' categorias.');
     }catch(e){
-      toast('Arquivo inválido. Use uma cópia gerada pela própria NexaFlow.');
+      toast('Arquivo inválido. Use uma cópia gerada pela própria Nexalytix.');
     }
   };
   r.readAsText(f);
@@ -18356,7 +18356,7 @@ function copiarDiagnostico(){
         return f.h+'  '+f.onde+': '+f.msg;
       }).join('\n');
   }
-  t='NEXAFLOW — diagnóstico\nVersão: '+VERSAO+'\nLoja: '+(NUVEM.loja||'-')+
+  t='NEXALYTIX — diagnóstico\nVersão: '+VERSAO+'\nLoja: '+(NUVEM.loja||'-')+
     '\nCargo: '+((NUVEM.perfil||{}).cargo||'-')+
     '\nConexão: '+CONEXAO+'\nPendente: '+(NUVEM.sujo?'sim':'nao')+'\n\n'+_relatorioLentidao()+'\n'+t;
   try{navigator.clipboard.writeText(t);toast('Diagnóstico copiado. Cole no chat.');}
@@ -20620,7 +20620,7 @@ function explicaTransf(){
 
 /* ==========================================================
    MODO OFFLINE
-   O NexaFlow sempre grava no aparelho primeiro e sobe depois — a venda
+   O Nexalytix sempre grava no aparelho primeiro e sobe depois — a venda
    nunca dependeu da internet. O que faltava era a pessoa SABER em que
    estado esta, e ter onde conferir o que ainda nao subiu.
 
@@ -20754,7 +20754,7 @@ function telaSincronizacao(){
 
   $('content').innerHTML='<div class="etWrap"><div class="etScroll">'+
    '<div class="etTopo"><div><h1>Sincronização</h1>'+
-   '<p>O NexaFlow grava tudo no aparelho primeiro. A nuvem recebe depois — por isso a '+
+   '<p>O Nexalytix grava tudo no aparelho primeiro. A nuvem recebe depois — por isso a '+
    'venda nunca para quando a internet cai.</p></div>'+
    '<button class="infoBt" onclick="explicaOffline()">'+sv('help',15)+'</button></div>'+
 
@@ -20814,7 +20814,7 @@ async function enviarAgora(){
   telaSincronizacao();
 }
 function explicaOffline(){
-  confirmar({titulo:'Como a NexaFlow funciona sem internet',texto:'Modo offline',
+  confirmar({titulo:'Como a Nexalytix funciona sem internet',texto:'Modo offline',
    linhas:[['A venda','é gravada no aparelho, não na nuvem',''],
            ['O estoque','baixa na hora, normalmente',''],
            ['O financeiro','lança na hora, normalmente',''],
@@ -20829,7 +20829,7 @@ function explicaOffline(){
 /* ==========================================================
    FISCAL — NFC-e (modelo 65)
    Sao Paulo tornou a NFC-e obrigatoria em janeiro de 2026.
-   O NexaFlow nao fala com a SEFAZ direto: quem assina, transmite e
+   O Nexalytix nao fala com a SEFAZ direto: quem assina, transmite e
    acompanha rejeicao e um provedor homologado. Assim, quando o
    leiaute muda — e mudou agora, com IBS/CBS da reforma — quem
    atualiza e o provedor, nao nos.
@@ -21023,7 +21023,7 @@ function explicaFiscal(){
            ['Série','uma para normal, outra para contingência',''],
            ['NCM por produto','sem ele a SEFAZ rejeita',''],
            ['Impressora','comum serve — não precisa ser fiscal','']],
-   aviso:'A NexaFlow não fala com a SEFAZ direto. Quem assina e transmite é o provedor '+
+   aviso:'A Nexalytix não fala com a SEFAZ direto. Quem assina e transmite é o provedor '+
     'homologado — assim, quando o leiaute muda (como agora, com IBS e CBS da reforma '+
     'tributária), quem atualiza é ele. Nada aqui substitui seu contador.',
    ok:'Entendi',cancelar:null}).then(function(){});
@@ -21976,7 +21976,7 @@ function concluirMesa(ped){
 }
 
 /* ==========================================================
-   LAYOUT DO MENU — só o dono da NexaFlow
+   LAYOUT DO MENU — só o dono da Nexalytix
    A ordem dos modulos e das telas dentro deles estava escrita no
    codigo. Agora ela vem de uma linha unica no banco, valida para
    todas as redes: o que for salvo aqui muda o menu de todo mundo.
@@ -22024,7 +22024,7 @@ var LM={mod:null};
 function telaLayoutMenu(){
   if(!ehPlataforma()){
     $('content').innerHTML='<div class="construWrap"><div class="construBox">'+
-     '<div class="construIc">'+sv('lock',30)+'</div><b>Tela do dono da NexaFlow</b>'+
+     '<div class="construIc">'+sv('lock',30)+'</div><b>Tela do dono da Nexalytix</b>'+
      '<p>Só a plataforma configura o layout do menu.</p></div></div>';
     rodape('sem permissão');return;
   }
@@ -22033,7 +22033,7 @@ function telaLayoutMenu(){
     '<div><h1>Layout do Menu</h1>'+
     '<p>A ordem em que os módulos e as telas aparecem para <b>todos os clientes</b>. '+
     'Suba o que é mais usado. Nada some daqui — para tirar uma tela de um cliente, '+
-    'use Clientes NexaFlow &rsaquo; Telas liberadas.</p></div>'+
+    'use Clientes Nexalytix &rsaquo; Telas liberadas.</p></div>'+
     '<div style="flex:1"></div>'+
     '<button class="btnP2 ok" onclick="salvarLayoutMenu()">'+sv('nike',14)+' Salvar e publicar</button>'+
    '</div>'+
@@ -22082,7 +22082,7 @@ function moverItem(mid,j,d){
   redesenharLayout();
 }
 async function salvarLayoutMenu(){
-  if(!ehPlataforma()){toast('Só o dono da NexaFlow pode publicar o layout.');return;}
+  if(!ehPlataforma()){toast('Só o dono da Nexalytix pode publicar o layout.');return;}
   var mods=MOD.map(function(m){return m.id});
   var itens={};
   MOD.forEach(function(m){itens[m.id]=(m.it||[]).map(function(t){return t.id})});
@@ -24339,7 +24339,7 @@ function reciboPago(acId){
   '<br><br><br>'+
   '<div style="text-align:center">_________________________________________</div>'+
   '<div style="text-align:center">'+E(e?e.nome:'')+(e&&e.cpf?'<br>CPF '+E(e.cpf):'')+'</div>'+
-  '<br><div style="text-align:center;font-size:10px">NEXAFLOW · emitido em '+new Date().toLocaleString('pt-BR')+'</div>';
+  '<br><div style="text-align:center;font-size:10px">NEXALYTIX · emitido em '+new Date().toLocaleString('pt-BR')+'</div>';
   document.body.appendChild(el);
   setTimeout(function(){window.print()},150);
 }
@@ -24348,7 +24348,7 @@ function imprimirRecibo(entId){
   var e=ent(entId),r=resumoEntregador(e,AC.de,AC.ate);
   var el=document.getElementById('viaImp')||document.createElement('div');
   el.id='viaImp';
-  el.innerHTML='<div style="text-align:center"><b>NEXAFLOW — ACERTO DE ENTREGAS</b><br>'+
+  el.innerHTML='<div style="text-align:center"><b>NEXALYTIX — ACERTO DE ENTREGAS</b><br>'+
   dataBR(AC.de)+' a '+dataBR(AC.ate)+'</div><hr>'+
   '<div>Entregador: '+E(e.nome)+'</div>'+(e.cpf?'<div>CPF: '+E(e.cpf)+'</div>':'')+
   '<div>Telefone: '+E(e.tel||'—')+'</div><hr>'+
@@ -24364,7 +24364,7 @@ function imprimirRecibo(entId){
 function imprimirAcertos(){
   var el=document.getElementById('viaImp')||document.createElement('div');
   el.id='viaImp';
-  el.innerHTML='<div style="text-align:center"><b>NEXAFLOW — ACERTOS</b><br>'+dataBR(AC.de)+' a '+dataBR(AC.ate)+'</div><hr>'+
+  el.innerHTML='<div style="text-align:center"><b>NEXALYTIX — ACERTOS</b><br>'+dataBR(AC.de)+' a '+dataBR(AC.ate)+'</div><hr>'+
   (DB.entregadores||[]).map(function(e){
     var r=resumoEntregador(e,AC.de,AC.ate);
     return E(e.nome)+' — '+r.qtd+' entregas — R$ '+money(r.aPagar);}).join('<br>');
@@ -25623,7 +25623,7 @@ function exportarCMV(){
 
 
 /* ==========================================================
-   CLIENTES NEXAFLOW
+   CLIENTES NEXALYTIX
    Carteira de quem paga pelo sistema. Isto e do dono do
    produto — nenhum cliente ve esta tela.
    ========================================================== */
@@ -25651,7 +25651,7 @@ function telaClientesParceiros(){
   var receb=ativos.filter(function(c){return cnPago(c,ano,mes)});
   var aRec=mrr-receb.reduce(function(a,c){return a+(Number(c.mensalidade)||0)},0);
   $('content').innerHTML='<div class="ctWrap" style="max-width:none">'+
-   '<div class="ctTopo"><h1>Clientes NexaFlow</h1>'+
+   '<div class="ctTopo"><h1>Clientes Nexalytix</h1>'+
     '<p>As redes que contrataram o sistema, o que cada uma paga e o que já entrou no mês. '+
     'Esta tela é sua — nenhum cliente tem acesso a ela.</p></div>'+
    '<div class="hpNums" style="border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px">'+
@@ -25800,7 +25800,7 @@ async function excluirCN(id){
 
 /* ==========================================================
    ASSISTENTE DE INSTALACAO
-   O NexaFlow nasce vazio. Aqui a rede e criada a partir do que
+   O Nexalytix nasce vazio. Aqui a rede e criada a partir do que
    o cliente digita — nenhum nome de empresa vive no codigo.
    ========================================================== */
 var INS={rede:null,und:null,nova:false,carregando:false,erro:'',nuvem:null};
@@ -25834,7 +25834,7 @@ function semAcento(t){return String(t||'').normalize('NFD').replace(/[\u0300-\u0
 function apelidoLogin(n){return semAcento(n).toLowerCase().replace(/[^a-z0-9]/g,'')}
 
 /* ==========================================================
-   PAINEL DA PLATAFORMA — Administração da NexaFlow
+   PAINEL DA PLATAFORMA — Administração da Nexalytix
    Hierarquia: EMPRESA (loja) → UNIDADE (sucursal) → ACESSO (perfil).
    A primeira unidade de uma empresa e SEMPRE a matriz — decidido no banco,
    nao na tela, para nao depender de ninguem marcar a caixinha certa.
@@ -25883,7 +25883,7 @@ function telaInstalacao(){
   $('content').innerHTML='<div class="ctWrap">'+
    '<div class="ctTopo"><h1>'+(ehPlataforma()?'Empresas Clientes':'Minha rede')+'</h1>'+
     '<p>'+(ehPlataforma()
-      ?'Cada empresa que usa a NexaFlow é um ambiente separado. Uma nunca enxerga os dados da outra.'
+      ?'Cada empresa que usa a Nexalytix é um ambiente separado. Uma nunca enxerga os dados da outra.'
       :'Aqui ficam as unidades da sua rede. Abra a rede para cadastrar uma nova sucursal.')+
     '</p></div>'+
    (INS.erro?'<div class="usrVazio" style="background:#fff;border:1px solid var(--line);border-radius:10px">'+
@@ -25987,7 +25987,7 @@ async function excluirEmpresa(lojaId){
 }
 function telaRestrita(tit){
   $('content').innerHTML='<div class="ctWrap"><div class="ctTopo"><h1>'+E(tit)+'</h1>'+
-   '<p>Esta tela pertence à administração da NexaFlow.</p></div>'+
+   '<p>Esta tela pertence à administração da Nexalytix.</p></div>'+
    '<div class="usrVazio" style="background:#fff;border:1px solid var(--line);border-radius:10px">'+
    '<b>Área restrita</b><span>Só o administrador da plataforma acessa esta parte.</span></div></div>';
   rodape();
@@ -26027,7 +26027,7 @@ function telaRedeAberta(id){
 
    (ehPlataforma()?
    '<div class="blk" style="max-width:900px">'+
-    '<div class="acTit">Contrato com a NexaFlow</div>'+
+    '<div class="acTit">Contrato com a Nexalytix</div>'+
     ctLinha('Responsável',E(ct.responsavel||'—'))+
     ctLinha('E-mail',E(ct.email||'—'))+
     ctLinha('Telefone',E(ct.telefone||'—'))+
@@ -26213,7 +26213,7 @@ function formUnidade(lojaId,sucId){
     '<h1 style="margin-top:10px">'+(sucId?'Editar unidade':'Cadastrar sucursal')+
       (s.matriz?selo('MATRIZ','#1F5F8B'):(primeira?selo('SERÁ A MATRIZ','#1F5F8B'):''))+'</h1>'+
     '<p>'+(s.matriz?'Esta é a matriz — ela não pode ser desativada enquanto houver filial ativa.'
-      :'A sucursal pertence à mesma empresa da matriz. Não é um cliente novo da NexaFlow.')+'</p></div>'+
+      :'A sucursal pertence à mesma empresa da matriz. Não é um cliente novo da Nexalytix.')+'</p></div>'+
    '<div class="blk" style="max-width:900px"><div class="acTit">Identificação</div>'+
     '<div class="grid2">'+
      cmp('Nome da unidade *','unNome',s.nome,'',true)+
@@ -26308,7 +26308,7 @@ async function salvarUnidade(){
 }
 
 /* ==========================================================
-   CENTRAL DE DIAGNOSTICO — so o dono da NexaFlow
+   CENTRAL DE DIAGNOSTICO — so o dono da Nexalytix
    O erro tecnico sai da tela do caixa e vem para ca. Aqui aparece o que o
    operador nunca deveria ler: tabela, codigo do banco, tentativa, empresa,
    unidade e horario.
@@ -26623,7 +26623,7 @@ var PRM={loja:null,alvo:null,abertas:{},pend:{}};
    O QUE PODE SER VENDIDO
    Esta lista alimenta a tela onde o dono marca o que a empresa contratou.
    Ela mostrava TODAS as telas do sistema, inclusive as seis que sao
-   exclusivas da NexaFlow (Mapa do Sistema, Empresas Clientes, Diagnostico,
+   exclusivas da Nexalytix (Mapa do Sistema, Empresas Clientes, Diagnostico,
    Backup, Layout do Menu, Dados de Teste). O dono marcava, salvava, e nada
    acontecia — porque a trava de podeVer recusa essas telas para quem nao e
    plataforma, e com razao: sao as telas que administram o proprio produto.
@@ -26635,7 +26635,7 @@ function chavesDoSistema(){
   var out=[];
   MOD.forEach(function(m){
     (m.it||[]).forEach(function(it){
-      if(SO_PLATAFORMA.indexOf(m.id+'/'+it.id)>=0)return;   /* so da NexaFlow: nao se vende */
+      if(SO_PLATAFORMA.indexOf(m.id+'/'+it.id)>=0)return;   /* so da Nexalytix: nao se vende */
       out.push({mod:m.id,modn:m.n,item:it.id,n:it.n});
     });
   });
@@ -26646,7 +26646,7 @@ function chavesDoSistema(){
    A MATRIZ E O TETO. O que a empresa contratou e o que a matriz enxerga —
    nao existe um terceiro nivel de "contrato" a parte, porque seria a mesma
    lista escrita duas vezes. Regra em uma frase: se a matriz nao ve, nenhuma
-   loja dela ve. Quem define a matriz e so a NexaFlow; a matriz distribui entre
+   loja dela ve. Quem define a matriz e so a Nexalytix; a matriz distribui entre
    as sucursais o que ela mesma tem.
    ========================================================== */
 function telaPermUnidade(){
@@ -26760,8 +26760,8 @@ async function salvarPermissoes(){
 }
 
 /* ==========================================================
-   FINANCEIRO DA NEXAFLOW
-   Substitui a antiga tela "Clientes NexaFlow", que mostrava a mesma coisa a
+   FINANCEIRO DA NEXALYTIX
+   Substitui a antiga tela "Clientes Nexalytix", que mostrava a mesma coisa a
    partir de uma lista paralela (DB.clientesParceiros) — duas telas com o mesmo
    assunto e numeros que podiam divergir. Agora e uma so, lendo as UNIDADES
    direto da nuvem, que e onde a cobranca mora desde que ela passou a ser
@@ -26892,7 +26892,7 @@ function telaFinanceiroParceiros(){
          :'<button class="btnMini" onclick="marcarPagoUnidade(\''+s.id+'\',true)">marcar pago</button>'))+'</td>'+
        /* ==========================================================
           O LAPIS LEVA CADA UM AO SEU LUGAR
-          Ele abria Empresas Clientes, que e exclusiva do dono da NexaFlow — a
+          Ele abria Empresas Clientes, que e exclusiva do dono da Nexalytix — a
           franqueadora clicava e batia em "Sem acesso a esta tela". Para ela
           o valor e o vencimento moram no cadastro da propria sucursal, que
           e onde ela pode e deve editar.
@@ -27093,7 +27093,7 @@ function telaCarga(){
   var a=areaImp();
   $('content').innerHTML='<div class="etWrap"><div class="etScroll">'+
    '<div class="etTopo"><div><h1>Importar Dados</h1>'+
-   '<p>Traz para a NexaFlow os cadastros de um sistema anterior. Cada tipo de dado tem a sua '+
+   '<p>Traz para a Nexalytix os cadastros de um sistema anterior. Cada tipo de dado tem a sua '+
    'área — assim o sistema não precisa adivinhar o que é ficha e o que é ingrediente.</p></div>'+
    '<button class="infoBt" onclick="explicaImport()">'+sv('help',15)+'</button></div>'+
 
@@ -27402,13 +27402,13 @@ function telaCargaJSON(){
   var r=(CARGA_SFS&&CARGA_SFS.resumo)||null;
   $('content').innerHTML='<div class="ctWrap">'+
    '<div class="ctTopo"><h1>Importar Dados</h1>'+
-    '<p>Traz para a NexaFlow os cadastros de um sistema anterior: grupos, ingredientes com estoque e '+
+    '<p>Traz para a Nexalytix os cadastros de um sistema anterior: grupos, ingredientes com estoque e '+
     'custo, fichas técnicas com composição e modo de preparo, e fornecedores. '+
     'Os dados vêm de um <b>arquivo de importação</b> — nada fica escrito dentro do sistema.</p></div>'+
    '<div class="blk" style="max-width:820px">'+
     '<div class="acTit">1. Escolha o arquivo</div>'+
     '<input type="file" id="cgArq" accept=".json,application/json" onchange="lerArquivoCarga(this)">'+
-    '<div class="hint">Arquivo <b>.json</b> de importação da NexaFlow. Se você tem planilhas do sistema '+
+    '<div class="hint">Arquivo <b>.json</b> de importação da Nexalytix. Se você tem planilhas do sistema '+
     'antigo, me envie que eu gero este arquivo a partir delas.</div>'+
    '</div>'+
    (r?'<div class="ctGrade">'+
@@ -27662,7 +27662,7 @@ function telaBackup(){
     ctCard('Quantas camadas você tem','proteção em três níveis',
      ctLinha('1. O aparelho','os dados ficam no computador da loja, funcionando sem internet')+
      ctLinha('2. A nuvem','o banco Supabase — hoje no plano gratuito, <b>sem backup do serviço</b>')+
-     ctLinha('3. Estas cópias','fotografias diárias automáticas, feitas pela NexaFlow')+
+     ctLinha('3. Estas cópias','fotografias diárias automáticas, feitas pela Nexalytix')+
      '<div class="ctNota ctAt">Atenção: no <b>plano gratuito</b>, o Supabase não guarda cópia nenhuma. '+
      'Hoje a camada 3 é a sua única rede de proteção real. No plano Pro (~US$ 25/mês) o próprio '+
      'serviço passa a fazer backup diário e permite voltar o banco a qualquer minuto dos últimos dias. '+
@@ -27703,9 +27703,9 @@ function telaCentralTecnica(){
   $('content').innerHTML='<div class="ctWrap">'+
    '<div class="ctTopo">'+
     '<h1>Mapa do Sistema</h1>'+
-    '<p>Esta tela é a planta baixa da NexaFlow. Foi escrita para você entender sem saber programar '+
+    '<p>Esta tela é a planta baixa da Nexalytix. Foi escrita para você entender sem saber programar '+
     'e para quem assumir o desenvolvimento encontrar tudo sem depender de ninguém. '+
-    '<b>Esta tela é do dono da NexaFlow</b> — nenhum cliente, nem a franqueadora dele, tem acesso: '+
+    '<b>Esta tela é do dono da Nexalytix</b> — nenhum cliente, nem a franqueadora dele, tem acesso: '+
     'aqui estão as contas de infraestrutura do produto.</p>'+
    '</div>'+
    '<div class="ctAbas">'+abas.map(function(a){
@@ -27720,7 +27720,7 @@ function telaCentralTecnica(){
 }
 
 function ctPecas(){
-  return '<p class="ctIntro">A NexaFlow não é um programa só. São <b>quatro peças separadas</b> que '+
+  return '<p class="ctIntro">A Nexalytix não é um programa só. São <b>quatro peças separadas</b> que '+
    'conversam entre si. Isso é de propósito: se uma quebrar, as outras continuam funcionando. '+
    'É a diferença entre queimar uma lâmpada e cair a casa inteira.</p>'+
   '<div class="ctGrade">'+
@@ -27775,7 +27775,7 @@ function ctContas(){
     ctLinha('Endereço da API','https://SEU-PROJETO.supabase.co')+
     ctLinha('Região','[preencher com a região escolhida no seu projeto]')+
     ctLinha('Plano','gratuito — <b>sem backup do serviço</b>')+
-    ctLinha('Painel','supabase.com/dashboard → projeto da NexaFlow')+
+    ctLinha('Painel','supabase.com/dashboard → projeto da Nexalytix')+
     ctLinha('Onde ficam as chaves','painel → Project Settings → API')+
     ctLinha('O que guarda','absolutamente todos os dados da rede')+
     '<div class="ctNota ctAt">É a peça mais crítica. Perder o acesso a esta conta é o pior cenário. '+
@@ -27861,7 +27861,7 @@ function ctDados(){
 }
 
 function ctBackupDoc(){
-  return '<p class="ctIntro">Como o backup da NexaFlow funciona, <b>onde os dados ficam guardados</b> '+
+  return '<p class="ctIntro">Como o backup da Nexalytix funciona, <b>onde os dados ficam guardados</b> '+
    'e o passo a passo para resgatar. Escrito para quem nunca viu o sistema.</p>'+
   '<div class="ctGrade">'+
    ctCard('Como funciona','automático, sem ninguém apertar nada',
@@ -27891,13 +27891,13 @@ function ctBackupDoc(){
     '<div class="ctNota ctAt">Tudo que aconteceu <b>depois</b> da data restaurada se perde. '+
     'Restaurar é para acidente grave, não para corrigir um lançamento errado.</div>')+
 
-   ctCard('Como resgatar sem o sistema','se a NexaFlow não abrir',
+   ctCard('Como resgatar sem o sistema','se a Nexalytix não abrir',
     '<div class="ctPasso"><b>1.</b> Entre em supabase.com/dashboard com a conta da franqueadora</div>'+
     '<div class="ctPasso"><b>2.</b> Table Editor → tabela <b>backups</b> → ordene por criado_em</div>'+
     '<div class="ctPasso"><b>3.</b> Copie o conteúdo da coluna <b>dados</b> da linha desejada</div>'+
     '<div class="ctPasso"><b>4.</b> É um JSON com todas as coleções — qualquer programador '+
     'recoloca no sistema a partir dali</div>'+
-    '<div class="ctNota ctOk">Ou seja: os dados não ficam presos à NexaFlow. '+
+    '<div class="ctNota ctOk">Ou seja: os dados não ficam presos à Nexalytix. '+
     'Estão num banco padrão de mercado, legíveis por qualquer ferramenta.</div>')+
 
    ctCard('O que falta para ficar profissional','honestidade',
@@ -28368,7 +28368,7 @@ function imprimirLanc(){
   var totR=lista.filter(function(l){return l.tipo==='receita'}).reduce(function(a,l){return a+l.valor},0);
   var el=document.getElementById('viaImp')||document.createElement('div');
   el.id='viaImp';
-  el.innerHTML='<div style="text-align:center"><b>NEXAFLOW — LANÇAMENTOS FINANCEIROS</b><br>'+
+  el.innerHTML='<div style="text-align:center"><b>NEXALYTIX — LANÇAMENTOS FINANCEIROS</b><br>'+
   dataBR(LF.de)+' a '+dataBR(LF.ate)+'</div><hr>'+
   lista.map(function(l){
     return dataBR(l.vencimento)+' — '+E(l.descricao)+' — '+catTexto(l)+' — '+
@@ -35606,7 +35606,7 @@ async function resetTotal(){
    O robô entende, confere com o gestor e grava o lançamento já
    confirmado em whatsapp_pendentes. Quem APLICA é aqui.
 
-   Por que não deixar o robô aplicar direto: no NexaFlow o estoque é
+   Por que não deixar o robô aplicar direto: no Nexalytix o estoque é
    um número guardado no insumo, somado por aplicarMovimento().
    Não existe reconstrução a partir dos movimentos. Se o robô
    também somasse, seriam duas contas em lugares diferentes — e
@@ -35684,7 +35684,7 @@ async function aplicarPendenteAssistente(p){
     valor:total,emissao:dt,vencimento:dt,
     pagamento:jaPago?dt:'',pago:jaPago,
     origem:'nota-entrada',ref:n.id,
-    obs:'Lançado pela Assistente NexaFlow, confirmado por '+(p.telefone||'—')+
+    obs:'Lançado pela Assistente Nexalytix, confirmado por '+(p.telefone||'—')+
       (d.formaPagamento?' · '+d.formaPagamento:'')};
   DB.lancFin.push(lanc);
   n.lancIds=[lanc.id];
@@ -38561,7 +38561,7 @@ async function apagarVendasDemo(){
 /* ==========================================================
    CONFIRMAÇÃO E AVISO — no lugar das caixas do navegador
    ========================================================== */
-/* Aviso no padrão do NexaFlow, no meio da tela. Substitui a janela cinza do
+/* Aviso no padrão do Nexalytix, no meio da tela. Substitui a janela cinza do
    navegador, que muda de cara em cada máquina e mostra o endereço do site. */
 function aviso(msg,titulo,tipo){
   return new Promise(function(resolve){
@@ -38597,9 +38597,9 @@ function aviso(msg,titulo,tipo){
     setTimeout(function(){var b=ov.querySelector('button');if(b)b.focus();},40);
   });
 }
-/* qualquer alert() do sistema passa a abrir a janela do NexaFlow */
+/* qualquer alert() do sistema passa a abrir a janela do Nexalytix */
 window.alert=function(m){ try{aviso(m)}catch(e){console.log(m)} };
-/* Pergunta de sim/nao no padrao do NexaFlow, no lugar da caixa cinza do navegador.
+/* Pergunta de sim/nao no padrao do Nexalytix, no lugar da caixa cinza do navegador.
    Mesma caixa do aviso, com dois botoes. */
 function pergunta(msg,ok,tipo){
   var txt=String(msg==null?'':msg);
@@ -39326,7 +39326,7 @@ function baseSuc(){
    Idempotente: confere antes de criar, nunca duplica e nunca
    mexe em senha de usuario que ja existe.
    ---------------------------------------------------------- */
-function semearRedeInicial(){ /* removido: o NexaFlow nao nasce com rede nenhuma */ }
+function semearRedeInicial(){ /* removido: o Nexalytix nao nasce com rede nenhuma */ }
 function sucAtivas(){return baseSuc().filter(function(s){return s.ativa!==false})}
 function sucNome(id){var s=baseSuc().find(function(x){return x.id===id});return s?s.nome:'—'}
 var CORES_SUC=['#00A08B','#2C6FD1','#B8730B','#8B5CF6','#C94141','#0E8A46','#D9488A','#0891B2'];
@@ -40784,7 +40784,7 @@ var CANAIS_LISTA=[
  {id:'whatsapp', n:'WhatsApp',         g:'proprio', ic:'chat',
   d:'robô que atende e avisa cada etapa do pedido', pronto:true,
   det:'Conecte o número da loja lendo um QR code. O robô responde os clientes e avisa quando o pedido sai para entrega.'},
- {id:'appgestao',n:'Aplicativo NexaFlow', g:'proprio', ic:'chart',
+ {id:'appgestao',n:'Aplicativo Nexalytix', g:'proprio', ic:'chart',
   d:'painel no celular para você e os franqueados', pronto:true,
   det:'Cada pessoa entra com o próprio login e vê apenas a loja dela: faturamento, pedidos, ticket médio e mais vendidos.'},
  {id:'totem',    n:'Totem de Autoatendimento', g:'proprio', ic:'store',
@@ -40824,7 +40824,7 @@ function telaCanaisIntegracao(){
     [['canais','Canais de venda','store'],
      ['cardapio','Cardápio Digital','book'],
      ['whatsapp','Robô do WhatsApp','chat'],
-     ['app','Aplicativo NexaFlow','chart'],
+     ['app','Aplicativo Nexalytix','chart'],
      ['dados','API de dados','chart'],
      ['tef','Integração TEF','cash']].map(function(a){
       return '<button class="abaCN'+(CN2.aba===a[0]?' on':'')+'" onclick="CN2.aba=\''+a[0]+'\';telaCanaisIntegracao()">'+
@@ -41009,8 +41009,8 @@ function blocoApp(){
    '<div class="cfgCol estreita"><div class="colH">Link para enviar</div>'+
     '<div class="colB" style="padding:16px">'+
      '<div class="appQr">'+
-      '<div class="appIco"><img src="logo-icone.png" alt="NexaFlow"></div>'+
-      '<b>NexaFlow</b>'+
+      '<div class="appIco"><img src="logo-icone.png" alt="Nexalytix"></div>'+
+      '<b>Nexalytix</b>'+
       '<span>painel da loja no celular</span>'+
      '</div>'+
      '<div class="linkGrande">'+E(link)+'</div>'+
@@ -41974,9 +41974,6 @@ function zapAtual(){
   return DB.zap[ZP.suc]||{};
 }
 async function zapApi(caminho,metodo,corpo){
-  /* sem ZAP_URL configurado, o robô de WhatsApp não existe nesta instalação —
-     nem tenta a chamada, pra não gerar pedido de rede pro proprio domínio */
-  if(!ZAP_URL)throw new Error('Robô de WhatsApp não configurado nesta instalação.');
   /* Quem autoriza é a sessão de quem está logado, não uma chave digitada.
      Distribuir chave para cada loja de cada cliente não se sustenta num
      sistema que vai ser vendido — e a chave compartilhada deixava qualquer
@@ -42484,9 +42481,9 @@ async function avisarCliente(ped,fase){
    AVISOS AO GERENTE — abertura, fechamento e cancelamentos
    ========================================================== */
 /* A assistente é um serviço da plataforma: o número é UM só, cadastrado pelo dono
-   do NexaFlow, e liberado loja a loja. A loja não digita número nenhum. */
+   do Nexalytix, e liberado loja a loja. A loja não digita número nenhum. */
 function baseAssPlat(){
-  DB.assPlat=DB.assPlat||{numero:'',nome:'Assistente NexaFlow',liberadas:{}};
+  DB.assPlat=DB.assPlat||{numero:'',nome:'Assistente Nexalytix',liberadas:{}};
   return DB.assPlat;
 }
 function assLiberada(suc){
@@ -42502,7 +42499,7 @@ function baseGerente(){
       avisaAbertura:true,avisaFechamento:true,avisaCancelamento:true,
       avisaSangria:true,avisaDivergencia:true,
       limiteDivergencia:5,
-      /* Assistente NexaFlow — canal próprio, separado do robô do cardápio */
+      /* Assistente Nexalytix — canal próprio, separado do robô do cardápio */
       assistente:true,
       assNome:'',          /* como ela se apresenta nesta loja */
       assZap:'',           /* o número da assistente (API oficial da Meta) */
@@ -42883,7 +42880,7 @@ function telaGerente(){
   var g=DB.gerente[GE.suc]||{};
   $('content').innerHTML='<div class="etWrap"><div class="etScroll">'+
    '<div class="etTopo">'+
-    '<div><h1>Assistente NexaFlow</h1>'+
+    '<div><h1>Assistente Nexalytix</h1>'+
     '<p>Ela avisa o que acontece na loja, cobra as rotinas e responde o que você '+
     'perguntar sobre venda, estoque e contas — pelo WhatsApp.</p></div>'+
     '<div style="flex:1"></div>'+
@@ -43052,19 +43049,19 @@ function ligarAvisos(lig){
 function previewMsg2(t){
   return String(t||'').replace(/\*(.+?)\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
 }
-/* painel do dono da NexaFlow: um número para tudo, liberado loja a loja */
+/* painel do dono da Nexalytix: um número para tudo, liberado loja a loja */
 function blocoAssPlataforma(){
   var a=baseAssPlat();
   baseSuc();
   return '<div class="assPlat">'+
-   '<div class="assPlatH">'+sv('lock',14)+' <b>Administração da NexaFlow</b>'+
+   '<div class="assPlatH">'+sv('lock',14)+' <b>Administração da Nexalytix</b>'+
     '<span>só você vê este bloco</span></div>'+
    '<div style="padding:13px 15px">'+
     '<div class="row2">'+
-     '<div class="fld2"><label>Número da Assistente NexaFlow</label>'+
+     '<div class="fld2"><label>Número da Assistente Nexalytix</label>'+
       '<input id="apNum" value="'+E(a.numero||'')+'" placeholder="o número oficial da Meta"></div>'+
      '<div class="fld2"><label>Nome padrão</label>'+
-      '<input id="apNome" value="'+E(a.nome||'Assistente NexaFlow')+'"></div>'+
+      '<input id="apNome" value="'+E(a.nome||'Assistente Nexalytix')+'"></div>'+
     '</div>'+
     '<div class="cfgSep" style="margin:12px 0 8px">Liberar para</div>'+
     '<div class="assLojas">'+
@@ -43084,7 +43081,7 @@ function blocoAssPlataforma(){
 async function salvarAssPlat(){
   var a=baseAssPlat();
   if($('apNum'))a.numero=$('apNum').value.trim();
-  if($('apNome'))a.nome=$('apNome').value.trim()||'Assistente NexaFlow';
+  if($('apNome'))a.nome=$('apNome').value.trim()||'Assistente Nexalytix';
   a.liberadas={};
   var cx=document.querySelectorAll('.assLojas input[data-suc]');
   for(var i=0;i<cx.length;i++)
@@ -43213,7 +43210,7 @@ function pdfRespostas(){
    '<table><thead><tr><th>Data</th><th>Rotina</th><th class="c">Resposta</th>'+
    '<th>Motivo</th><th class="c">Respondida em</th></tr></thead><tbody>'+linhas+'</tbody></table>'+
    '<div class="res"><b>Resumo:</b> '+sim+' feito(s) · '+nao+' não feito(s) · '+sem+' sem resposta</div>'+
-   '<p class="rod">Documento gerado pela NexaFlow. O registro original fica no sistema, '+
+   '<p class="rod">Documento gerado pela Nexalytix. O registro original fica no sistema, '+
    'com data e hora de cada resposta, e não pode ser alterado.</p>'+
    '</body></html>');
   w.document.close();
@@ -43291,7 +43288,7 @@ async function testarAvisoGerente(){
   var g=DB.gerente[GE.suc];
   g.tel=tel;g.ativo=true;salvar();
   await avisarGerente(GE.suc,'teste',
-    '✅ *Teste da NexaFlow*\n\n'+E(nomeLojaAtual())+'\n'+agoraBR()+
+    '✅ *Teste da Nexalytix*\n\n'+E(nomeLojaAtual())+'\n'+agoraBR()+
     '\n\nSe você recebeu esta mensagem, os avisos do caixa estão funcionando.');
 }
 
@@ -43989,7 +43986,7 @@ var IMP_PADRAO={
   '{c}Pedido {numero}\n'+
   '{c}Op: {operador}\n'+
   '{branco}\n'+
-  '{c}{p}{loja} - NexaFlow{/p}\n'+
+  '{c}{p}{loja} - Nexalytix{/p}\n'+
   '{corte}',
  entrega:
   '{c}{n}{loja}{/n}\n'+
@@ -44023,7 +44020,7 @@ var IMP_PADRAO={
   '{linha}\n'+
   '{c}Op: {operador}\n'+
   '{branco}\n'+
-  '{c}{p}{loja} - NexaFlow{/p}\n'+
+  '{c}{p}{loja} - Nexalytix{/p}\n'+
   '{corte}',
  mesa:
   '{c}{n}{loja}{/n}\n'+
@@ -44049,7 +44046,7 @@ var IMP_PADRAO={
   '{c}{p}Este documento nao tem valor fiscal{/p}\n'+
   '{c}Op: {operador}\n'+
   '{branco}\n'+
-  '{c}{p}{loja} - NexaFlow{/p}\n'+
+  '{c}{p}{loja} - Nexalytix{/p}\n'+
   '{corte}'
 };
 
@@ -45193,10 +45190,10 @@ function baseUsr(){
     if((lg.match(/@/g)||[]).length>1)return false;        /* dois arrobas: dominio errado */
     return true;
   });
-  /* garante um unico dono da NexaFlow */
+  /* garante um unico dono da Nexalytix */
   var donos=DB.usuarios.filter(function(u){return String(u.login||'').toLowerCase()===ADM_MESTRE});
   /* ------------------------------------------------------------------
-     O dono da NexaFlow NUNCA fica sem acesso.
+     O dono da Nexalytix NUNCA fica sem acesso.
      As permissoes vinham inteiras da tabela usuarios_sistema. Quando o
      download dela falhava — rede, token vencido, qualquer motivo — o registro
      era remontado sem 'tudo' nem 'mestre', e o dono entrava no proprio sistema
@@ -45289,7 +45286,7 @@ function baseUsr(){
   /* administrador mestre: só existe se ADM_MESTRE foi preenchido acima */
   if(ADM_MESTRE&&!DB.usuarios.some(function(u){return (u.login||'').toLowerCase()===ADM_MESTRE})){
     /* sem senha: quem entra e o Auth. Uma senha escrita aqui seria a mesma
-       em toda instalacao do NexaFlow — porta destrancada em todo cliente. */
+       em toda instalacao do Nexalytix — porta destrancada em todo cliente. */
     DB.usuarios.unshift({id:'usr_mestre',nome:'Administrador da Plataforma',login:ADM_MESTRE,
       senha:'',mestre:true,plataforma:true,ativo:true,sucursais:[],permissoes:{},tudo:true,
       criadoEm:new Date().toISOString()});
@@ -45315,13 +45312,13 @@ function podeVer(mid,iid){
   if(MOD_PLATAFORMA.indexOf(mid)>=0&&!ehPlataforma(u))return false;
   if(!u)return false;                       /* ninguem logado: nao mostra nada */
   if(!moduloContratado(mid))return false;   /* fora do contrato: some para todos */
-  if(iid&&!recursoContratado(mid,iid))return false;   /* tela fechada pelo dono da NexaFlow */
+  if(iid&&!recursoContratado(mid,iid))return false;   /* tela fechada pelo dono da Nexalytix */
   /* modo de venda desligado: a tela dele nao existe para esta loja */
   if((iid==='mesas'||iid==='vendas-mesa')&&typeof modoAtivo==='function'&&!modoAtivo('mesa'))return false;
   /* ==========================================================
      AS LISTAS EXCLUSIVAS SAO TRAVA, NAO PASSE-LIVRE
      Elas ficavam DEPOIS do atalho do acesso total, entao a franqueadora,
-     que tem acesso total, enxergava as telas do dono da NexaFlow. E ficavam
+     que tem acesso total, enxergava as telas do dono da Nexalytix. E ficavam
      como "return true", entao uma tela desta lista aparecia mesmo com a
      marcacao desligada. Agora elas so BARRAM quem nao e daquele grupo;
      quem e daquele grupo segue o caminho normal e obedece a marcacao.
@@ -45463,7 +45460,7 @@ function telaUsuarios(){
        }
        /* nome da empresa desta rede, para quando o usuario nao resolve sozinho */
        function empresaPadrao(){
-         /* o nome vem do contrato com a NexaFlow — e o nome real da empresa.
+         /* o nome vem do contrato com a Nexalytix — e o nome real da empresa.
             "Minha rede" era o rotulo de emergencia de uma lista local que
             nao existe mais. */
          if(DB._contrato&&DB._contrato.rede)return DB._contrato.rede;
@@ -45481,7 +45478,7 @@ function telaUsuarios(){
          if(sc&&sc.redeNome)return sc.redeNome;
          return empresaPadrao();
        }
-       /* o dono da NexaFlow nao pertence a empresa nenhuma: fica na secao de cima */
+       /* o dono da Nexalytix nao pertence a empresa nenhuma: fica na secao de cima */
        function ehDono(u){
          return String(u.login||'').toLowerCase()===ADM_MESTRE||!!u.plataforma;
        }
@@ -45672,7 +45669,7 @@ function abaAppUsr(u){
   var todos=!c.length;
   return '<div class="usrCorpo">'+
    '<div class="appAviso">'+sv('chat',18)+
-    '<div><b>Aplicativo NexaFlow</b>'+
+    '<div><b>Aplicativo Nexalytix</b>'+
     '<span>O franqueado abre este link no celular, entra com o mesmo login e senha, '+
     'e vê só a loja dele.</span>'+
     '<div class="appLink"><code>'+E(link)+'</code>'+
