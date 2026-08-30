@@ -14174,7 +14174,7 @@ async function sincronizar(){
      segundos em que o aparelho esta vazio. Qualquer coisa que apareca no DB
      nessa janela nao veio do cliente — veio do proprio sistema. Foi por essa
      porta que 27 insumos e 10 fichas de exemplo subiram como se fossem da
-     Rafaelos. Os semeadores foram desligados; esta trava garante que, se
+     outra rede que dividia o mesmo banco. Os semeadores foram desligados; esta trava garante que, se
      algum dia nascer outro, ele nao chega na nuvem.
      O envio nao e perdido: fica pendente e sai assim que o download terminar.
      ========================================================== */
@@ -15729,7 +15729,7 @@ function volta(linhas,fn,atual,col){
        logo a nuvem esta errada — mantinha o local E MARCAVA PARA SUBIR TUDO.
        Isso ressuscita cadastro apagado de proposito e, quando o aparelho tem
        dado de outra empresa na memoria, despeja essa empresa dentro desta.
-       Foi assim que a Doce Aroma foi parar dentro da Rafaelos.
+       Foi assim que dados de uma empresa foram parar dentro de outra.
        Agora: o que esta na tela e preservado (ninguem perde o trabalho do
        dia), mas NADA sobe por conta disso. A causa fica registrada no log
        tecnico para ser investigada — pode ser RLS, loja errada, sessao
@@ -16129,7 +16129,7 @@ async function entrarPeloAuth(lg,sn){
 
      O aparelho era limpo em TODO login. A razao e boa: quem usou o
      computador antes nao pode deixar a base dele para o proximo — foi assim
-     que os dados da Doce Aroma apareceram dentro da Rafaelos.
+     que dados de uma empresa apareceram dentro de outra.
      O erro era o alcance. Limpar tambem quando e A MESMA PESSOA da MESMA
      loja entrando de novo faz o sistema comecar do zero toda vez: as 51
      tabelas sao rebaixadas, e o registro de "o que ja subiu" (_hash e _uuid)
@@ -16282,8 +16282,8 @@ async function entrar(){
      nao conseguia resolver a rede do usuario — o que acontece SEMPRE logo apos
      o login, porque o aparelho acabou de ser zerado e a lista de redes esta
      vazia — a conferencia devolvia "ok" e liberava a entrada com qualquer
-     texto digitado. Era possivel entrar com o usuario da Doce Aroma escrevendo
-     "rafaellos" no campo.
+     texto digitado. Era possivel entrar com o usuario de uma empresa escrevendo
+     o nome de outra rede no campo.
      Quem separa os clientes e o Supabase Auth (o e-mail ja diz de quem e o
      acesso) somado ao RLS, que so entrega as linhas da loja daquele perfil.
      Uma conferencia no navegador nunca foi barreira: qualquer pessoa a remove
@@ -19633,7 +19633,7 @@ function pintarTotem(){
      '<div style="background:#fff;border-radius:14px;padding:22px 18px;width:100%">'+
      '<div style="font-size:8px;font-weight:800;letter-spacing:.12em;color:var(--tx2,#7a7266)">SUA SENHA</div>'+
      '<div style="font-size:46px;font-weight:800;color:'+t.fundo+';line-height:1;margin:4px 0">47</div>'+
-     (t.nome!=='nao'?'<div style="font-size:8px;color:var(--tx2,#7a7266)">Rafael</div>':'')+'</div>'+
+     (t.nome!=='nao'?'<div style="font-size:8px;color:var(--tx2,#7a7266)">Cliente</div>':'')+'</div>'+
      '<div style="font-size:12px;font-weight:700;margin-top:14px;line-height:1.35">'+E(t.msgFim)+'</div>'+
      '<div style="font-size:8.5px;opacity:.85;margin-top:6px">'+E(t.msgFim2)+'</div></div>';
   }
@@ -21174,7 +21174,7 @@ function telaCuponsFiscais(){
    '<th style="width:86px;text-align:right">Desconto</th>'+
    '<th style="width:100px;text-align:right">Total</th>'+
    '<th style="width:92px"></th></tr></thead>'+
-   /* busca dentro da coluna, como na tela que o Rafael usa hoje */
+   /* busca dentro da coluna, como na tela de uso diario */
    '<tbody><tr class="cfBusca">'+
     '<td></td><td></td><td></td><td></td><td></td>'+
     '<td><input id="cfCons" value="'+E(CFI.consumidor)+'" placeholder="buscar consumidor" '+
@@ -27681,7 +27681,7 @@ function telaBackup(){
 
 /* ==========================================================
    CENTRAL TECNICA — o mapa do sistema, em portugues.
-   Serve para o Rafael entender e para o programador que
+   Serve para o dono do sistema entender e para o programador que
    assumir encontrar tudo sem precisar perguntar.
    ========================================================== */
 var CT={aba:'pecas'};
@@ -27773,7 +27773,7 @@ function ctContas(){
     ctLinha('Identificador do projeto','SEU-PROJETO')+
     ctLinha('Endereço do banco','db.SEU-PROJETO.supabase.co')+
     ctLinha('Endereço da API','https://SEU-PROJETO.supabase.co')+
-    ctLinha('Região','us-east-2 (Ohio, EUA)')+
+    ctLinha('Região','[preencher com a região escolhida no seu projeto]')+
     ctLinha('Plano','gratuito — <b>sem backup do serviço</b>')+
     ctLinha('Painel','supabase.com/dashboard → projeto da Nexalytix')+
     ctLinha('Onde ficam as chaves','painel → Project Settings → API')+
@@ -27810,7 +27810,7 @@ function ctContas(){
     'automaticamente pelo fornecedor. Já aconteceu uma vez com a do Groq.</div>')+
 
    ctCard('Acessos do sistema','logins da rede',
-    ctLinha('Administrador da Nexalytix','rafael@uendes.com — enxerga todas as instalações')+
+    ctLinha('Administrador mestre','configurável em ADM_MESTRE no código — vazio por padrão nesta instalação')+
     ctLinha('Franqueadora','criada no Assistente de Instalação — acesso total à rede')+
     ctLinha('Unidades','uma por loja, criadas no mesmo assistente')+
     ctLinha('Onde se muda','Configuração da Loja › Usuários e Permissões')+
@@ -35176,7 +35176,7 @@ var _focoBusca='';
 var _semeando=false;
 /* DESATIVADA. Criava 11 insumos e 10 fichas de gelato (Base Iogurte, Base Belga,
    Morango Gelato, Coco Zero Acucar...) em qualquer loja com o cadastro vazio.
-   Foi o que encheu a Rafaelos de dados que nao eram dela — nao vieram da Doce Aroma,
+   Foi o que encheu outra rede de dados que nao eram dela — nao vieram desta empresa,
    nasceram aqui. Mantida vazia porque varias telas ainda a chamam. */
 function semearDemo(){ return; }
 
@@ -38397,8 +38397,7 @@ function gerarVendasDemo(){
   ['pedidos','produtos','categorias','clientes','entregadores','movEst','formasPag','sucursais']
     .forEach(function(k){ DB[k]=DB[k]||[]; });
   baseSuc();
-  /* Nao inventa mais unidade nenhuma. Antes criava "Doce Aroma Três Fronteiras",
-     "Rafaellos Shopping" e outras duas — fixas, com nome de cliente real —
+  /* Nao inventa mais unidade nenhuma. Antes criava unidades fixas, com nome de cliente real, direto no codigo —
      em QUALQUER empresa que clicasse em gerar demonstracao. A demonstracao
      usa as unidades que a propria loja tem. */
   if(!DB.sucursais.length){
@@ -39368,7 +39367,7 @@ function formSucursal(id){
   var s=id?DB.sucursais.find(function(x){return x.id===id}):null;
   modal(s?'Editar sucursal':'Cadastrar sucursal',
   '<div class="mdB"><div class="row2">'+
-   '<div class="fld2"><label>Nome *</label><input id="scNome" value="'+E(s?s.nome:'')+'" placeholder="Gelato Rafaellos Centro"></div>'+
+   '<div class="fld2"><label>Nome *</label><input id="scNome" value="'+E(s?s.nome:'')+'" placeholder="Ex.: Loja Centro"></div>'+
    '<div class="fld2"><label>Apelido</label><input id="scApe" value="'+E(s?s.apelido:'')+'" placeholder="Centro"></div>'+
   '</div><div class="row2">'+
    '<div class="fld2"><label>CNPJ</label><input id="scCnpj" value="'+E(s?s.cnpj:'')+'"></div>'+
