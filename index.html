@@ -12639,7 +12639,11 @@ function recursoContratado(mid,iid){
 }
 var SO_FRANQUEADORA=['loja/carga-inicial'];
 var MOD_PLATAFORMA=[];   /* V67: nenhum modulo bloqueado inteiro — o filtro fino e o SO_PLATAFORMA */
-var ADM_MESTRE='rafael@uendes.com';
+/* ADM_MESTRE: e-mail do "dono da plataforma" com acesso garantido em qualquer
+   instalação. Vem vazio por padrão nesta versão — preencha com o e-mail que
+   VOCÊ (dono do Nexalytix nesta instalação) usa para nunca ficar trancado
+   fora, se quiser esse mecanismo. Deixe vazio para desativá-lo. */
+var ADM_MESTRE='';
 /* quem e a plataforma nao depende de marcacao guardada: e o login, e so ele.
    Assim ninguem vira dono da Nexalytix copiando um usuario ou editando um cadastro. */
 function ehPlataforma(u){
@@ -12720,8 +12724,8 @@ var DB={categorias:[],produtos:[],grupos:[],fichas:[]};
    (ou injete via variável de ambiente no build, conforme
    ARQUITETURA-TECNICA.md, seção 3). */
 var NUVEM={
-  url:'https://zgqzjorwbrfmueoptmpw.supabase.co',      // ex.: 'https://SEU-PROJETO-DE-TESTE.supabase.co'
-  chave:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpncXpqb3J3YnJmbXVlb3B0bXB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwMzQ2NzUsImV4cCI6MjEwMzYxMDY3NX0.5W5kbXO5-BC-pl5j_60ktB6C-2KzbaCNVW4CKJw2x8g',    // chave "anon"/"publishable" do projeto de TESTE, nunca a service_role
+  url:'',      // ex.: 'https://SEU-PROJETO-DE-TESTE.supabase.co'
+  chave:'',    // chave "anon"/"publishable" do projeto de TESTE, nunca a service_role
   cli:null, token:null, ligada:false, baixou:false, sujo:false, log:[], loja:null, perfil:null, sincronizando:false, pendente:false, ultima:null
 };
 /* ==========================================================
@@ -45270,19 +45274,21 @@ function baseUsr(){
       if(sc)u.sucursais=[sc.id];
     });
   }catch(e){_quieto(e,'baseUsr')}
-  /* ninguem alem do dono da Nexalytix pode carregar a marcacao de plataforma */
-  DB.usuarios.forEach(function(u){
-    if(String(u.login||'').toLowerCase()!==ADM_MESTRE&&u.plataforma){u.plataforma=false;}
-  });
+  /* ninguem alem do dono da plataforma pode carregar a marcacao de plataforma */
+  if(ADM_MESTRE){
+    DB.usuarios.forEach(function(u){
+      if(String(u.login||'').toLowerCase()!==ADM_MESTRE&&u.plataforma){u.plataforma=false;}
+    });
+  }
   /* o acesso generico admin/admin das primeiras versoes nao vale mais */
   DB.usuarios=DB.usuarios.filter(function(u){
     return !((u.login||'').toLowerCase()==='admin'&&u.senha==='admin');
   });
-  /* administrador mestre do Nexalytix: existe em qualquer instalacao, enxerga tudo */
-  if(!DB.usuarios.some(function(u){return (u.login||'').toLowerCase()===ADM_MESTRE})){
+  /* administrador mestre: só existe se ADM_MESTRE foi preenchido acima */
+  if(ADM_MESTRE&&!DB.usuarios.some(function(u){return (u.login||'').toLowerCase()===ADM_MESTRE})){
     /* sem senha: quem entra e o Auth. Uma senha escrita aqui seria a mesma
        em toda instalacao do Nexalytix — porta destrancada em todo cliente. */
-    DB.usuarios.unshift({id:'usr_mestre',nome:'Administrador da Nexalytix',login:ADM_MESTRE,
+    DB.usuarios.unshift({id:'usr_mestre',nome:'Administrador da Plataforma',login:ADM_MESTRE,
       senha:'',mestre:true,plataforma:true,ativo:true,sucursais:[],permissoes:{},tudo:true,
       criadoEm:new Date().toISOString()});
   }
