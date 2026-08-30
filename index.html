@@ -25884,7 +25884,7 @@ function telaInstalacao(){
    '<div class="ctTopo"><h1>'+(ehPlataforma()?'Empresas Clientes':'Minha rede')+'</h1>'+
     '<p>'+(ehPlataforma()
       ?'Cada empresa que usa a NexaFlow é um ambiente separado. Uma nunca enxerga os dados da outra.'
-      :'Aqui ficam as unidades da sua rede. Abra a rede para cadastrar uma nova sucursal.')+
+      :'Aqui ficam as unidades da sua rede. Abra a rede para cadastrar uma nova loja.')+
     '</p></div>'+
    (INS.erro?'<div class="usrVazio" style="background:#fff;border:1px solid var(--line);border-radius:10px">'+
       '<b>Não consegui ler as empresas</b><span>'+E(INS.erro)+'</span>'+
@@ -26053,7 +26053,7 @@ function telaRedeAberta(id){
     (m?linhaUnidade(m):'')+x.filiais.map(linhaUnidade).join('')+
     '</tbody></table></div>'+
     '<div style="margin-top:12px"><button class="btnP2 ok" onclick="formUnidade(\''+l.id+'\')">'+
-      sv('plus',13)+' Cadastrar sucursal</button></div>'+
+      sv('plus',13)+' Cadastrar loja</button></div>'+
    '</div>'+
 
    '<div class="blk" style="max-width:900px;margin-top:12px">'+
@@ -26149,7 +26149,7 @@ function formEmpresaNova(){
     '</div></div>'+
    '<div class="blk" style="max-width:900px;margin-top:12px"><div class="acTit">Assinatura da matriz</div>'+
     '<p class="hint" style="margin:0 0 10px">A cobrança é <b>por unidade</b>. Este é o valor da matriz; '+
-    'cada sucursal terá o seu, e o total da empresa é a soma.</p>'+
+    'cada loja terá o seu, e o total da empresa é a soma.</p>'+
     '<div class="grid2">'+
      cmp('Plano contratado','nvPlano','','Ex.: Franquia, Loja única')+
      cmp('Valor da mensalidade','nvMens','','0,00')+
@@ -26210,10 +26210,10 @@ function formUnidade(lojaId,sucId){
   $('content').innerHTML='<div class="ctWrap">'+
    '<div class="ctTopo">'+
     '<button class="btnP2" onclick="INS.und=null;telaInstalacao()">‹ voltar para '+E(x.loja.nome)+'</button>'+
-    '<h1 style="margin-top:10px">'+(sucId?'Editar unidade':'Cadastrar sucursal')+
+    '<h1 style="margin-top:10px">'+(sucId?'Editar unidade':'Cadastrar loja')+
       (s.matriz?selo('MATRIZ','#1F5F8B'):(primeira?selo('SERÁ A MATRIZ','#1F5F8B'):''))+'</h1>'+
     '<p>'+(s.matriz?'Esta é a matriz — ela não pode ser desativada enquanto houver filial ativa.'
-      :'A sucursal pertence à mesma empresa da matriz. Não é um cliente novo da NexaFlow.')+'</p></div>'+
+      :'A loja pertence à mesma empresa da matriz. Não é um cliente novo da NexaFlow.')+'</p></div>'+
    '<div class="blk" style="max-width:900px"><div class="acTit">Identificação</div>'+
     '<div class="grid2">'+
      cmp('Nome da unidade *','unNome',s.nome,'',true)+
@@ -26697,7 +26697,7 @@ function telaPermUnidade(){
     '<p>'+(su.matriz
       ?'O que esta empresa contratou. As sucursais só recebem o que estiver marcado aqui — '+
        'desmarcar algo aqui tira das lojas dela junto.'
-      :'O que esta sucursal usa. O que a matriz não tem aparece travado.')+'</p></div>'+
+      :'O que esta loja usa. O que a matriz não tem aparece travado.')+'</p></div>'+
    '<div class="permBarra">'+
     (x.unidades||[]).map(function(s2){
       return '<button class="btnP2'+(s2.id===su.id?' ok':'')+'" '+
@@ -28586,7 +28586,7 @@ function telaConciliacao(){
     '<aside class="cbPane">'+
      '<div class="cbPaneH">Filtros</div>'+
      '<div class="cbPaneB">'+
-      '<div class="cbSecT">Sucursal</div>'+
+      '<div class="cbSecT">Loja</div>'+
       '<div class="cbLista">'+
        (DB.lojasFin||[{id:'lj_matriz',nome:'Matriz'}]).map(function(l,i){
          return '<div class="cbItem'+(i===0?' on':'')+'">'+sv('folder',14)+' '+E(l.nome)+'</div>'}).join('')+
@@ -39336,50 +39336,59 @@ function telaSucursais(){
   var l=DB.sucursais;
   $('content').innerHTML='<div class="etWrap"><div class="etScroll">'+
    '<div class="etTopo">'+
-    '<div><h1>Sucursais da Franquia</h1><p>As unidades que aparecem nos painéis e relatórios.</p></div>'+
+    '<div><h1>Lojas da Franquia</h1><p>As unidades que aparecem nos painéis e relatórios.</p></div>'+
     '<div style="flex:1"></div>'+
-    '<button class="btnP2 ok" onclick="formSucursal()">'+sv('plus',14)+' Cadastrar sucursal</button>'+
+    '<button class="btnP2 ok" onclick="formSucursal()">'+sv('plus',14)+' Cadastrar loja</button>'+
    '</div>'+
    '<div class="etTabW plano2">'+
    '<table class="etTab semBusca"><thead><tr>'+
     '<th style="width:36px"></th><th>Nome</th><th style="width:150px">Apelido</th>'+
     '<th style="width:170px">CNPJ</th><th style="width:180px">Cidade</th>'+
-    '<th style="width:100px;text-align:center">Situação</th>'+
-    '<th style="width:90px"></th></tr></thead><tbody>'+
+    '<th style="width:130px;text-align:center">Situação</th>'+
+    '<th style="width:130px"></th></tr></thead><tbody>'+
    l.map(function(s){
+     var semAdmin=!s.matriz&&!acessoDaSuc(s);
      return '<tr>'+
      '<td><span class="pontoSuc" style="background:'+(s.cor||'#00A08B')+'"></span></td>'+
      '<td><b>'+E(s.nome)+'</b>'+(s.matriz?'<span class="tagFicha">matriz</span>':'')+'</td>'+
      '<td>'+E(s.apelido||'—')+'</td>'+
      '<td>'+E(s.cnpj||'—')+'</td>'+
      '<td>'+E(s.cidade||'—')+(s.uf?' / '+E(s.uf):'')+'</td>'+
-     '<td style="text-align:center">'+(s.ativa!==false
-       ?'<span class="badge2">Ativa</span>':'<span class="badge2 rd">Inativa</span>')+'</td>'+
+     '<td style="text-align:center">'+(semAdmin
+       ?'<span class="badge2" style="background:#F5E3C6;color:#8A6A32">Pendente</span>'
+       :(s.ativa!==false
+         ?'<span class="badge2">Ativa</span>':'<span class="badge2 rd">Inativa</span>'))+'</td>'+
      '<td><div class="rowAct">'+
+      (semAdmin?'<button class="rBtn ok" onclick="formVincularAdmin(\''+s.id+'\')" title="Vincular administrador">'+sv('users',12)+'</button>':'')+
       '<button class="rBtn" onclick="formSucursal(\''+s.id+'\')">'+sv('edit',12)+'</button>'+
       (s.matriz?'':'<button class="rBtn rd" onclick="excluirSucursal(\''+s.id+'\')">'+sv('trash',12)+'</button>')+
-     '</div></td></tr>';
+     '</div></td></tr>'+
+     (semAdmin?'<tr><td></td><td colspan="6" style="padding:0 0 10px 0">'+
+       '<div class="hint" style="color:#8A6A32">Loja aguardando administrador — as vendas '+
+       'e o dia a dia dela só ficam disponíveis depois de vincular quem responde por ela.</div>'+
+       '</td></tr>':'');
    }).join('')+'</tbody></table></div></div></div>';
-  rodape(l.length+' sucursais');
+  rodape(l.length+' lojas');
 }
 function formSucursal(id){
   baseSuc();
   var s=id?DB.sucursais.find(function(x){return x.id===id}):null;
-  modal(s?'Editar sucursal':'Cadastrar sucursal',
+  var ehMatriz=!!(s&&s.matriz);
+  modal(s?'Editar loja':'Cadastrar loja',
   '<div class="mdB"><div class="row2">'+
    '<div class="fld2"><label>Nome *</label><input id="scNome" value="'+E(s?s.nome:'')+'" placeholder="Ex.: Loja Centro"></div>'+
-   '<div class="fld2"><label>Apelido</label><input id="scApe" value="'+E(s?s.apelido:'')+'" placeholder="Centro"></div>'+
+   '<div class="fld2"><label>Apelido *</label><input id="scApe" value="'+E(s?s.apelido:'')+'" placeholder="Centro"></div>'+
   '</div><div class="row2">'+
-   '<div class="fld2"><label>CNPJ</label><input id="scCnpj" value="'+E(s?s.cnpj:'')+'"></div>'+
-   '<div class="fld2"><label>Telefone</label><input id="scTel" value="'+E(s?s.telefone:'')+'"></div>'+
+   '<div class="fld2"><label>CNPJ *</label><input id="scCnpj" value="'+E(s?s.cnpj:'')+'"></div>'+
+   '<div class="fld2"><label>Telefone *</label><input id="scTel" value="'+E(s?s.telefone:'')+'"></div>'+
   '</div><div class="row2">'+
-   '<div class="fld2"><label>Cidade</label><input id="scCid" value="'+E(s?s.cidade:'')+'"></div>'+
-   '<div class="fld2"><label>UF</label><input id="scUf" maxlength="2" value="'+E(s?s.uf:'')+'"></div>'+
+   '<div class="fld2"><label>Cidade *</label><input id="scCid" value="'+E(s?s.cidade:'')+'"></div>'+
+   '<div class="fld2"><label>UF *</label><input id="scUf" maxlength="2" value="'+E(s?s.uf:'')+'"></div>'+
   '</div><div class="row2">'+
-   '<div class="fld2"><label>Mensalidade (R$)</label>'+
+   '<div class="fld2"><label>Mensalidade (R$) *</label>'+
     '<input id="scMens" value="'+E(s&&s.mensalidade?String(s.mensalidade).replace('.',','):'')+'" '+
     'placeholder="0,00"></div>'+
-   '<div class="fld2"><label>Dia do vencimento</label>'+
+   '<div class="fld2"><label>Dia do vencimento *</label>'+
     '<input id="scVenc" type="number" min="1" max="28" value="'+E(s&&s.diaVenc?s.diaVenc:'')+'" '+
     'placeholder="10"></div>'+
   '</div><div class="row2">'+
@@ -39388,15 +39397,18 @@ function formSucursal(id){
       return '<button class="corB'+((s?s.cor:CORES_SUC[0])===c?' on':'')+'" style="background:'+c+'" '+
       'onclick="_corSuc=\''+c+'\';document.querySelectorAll(\'.corB\').forEach(function(b){b.classList.remove(\'on\')});this.classList.add(\'on\')"></button>';
     }).join('')+'</div></div>'+
-   '<div class="fld2"><label>&nbsp;</label>'+
-    '<label class="chkL"><input type="checkbox" id="scAtiva" '+(!s||s.ativa!==false?'checked':'')+'>'+
-    '<span>Sucursal ativa</span></label></div>'+
+   (s?'<div class="fld2"><label>&nbsp;</label>'+
+    '<label class="chkL"><input type="checkbox" id="scAtiva" '+(s.ativa!==false?'checked':'')+'>'+
+    '<span>Loja ativa</span></label></div>':'<div class="fld2"></div>')+
   '</div>'+
+  (s?'':'<div class="hint" style="margin-top:2px">A loja nasce sem administrador — depois de '+
+    'salvar, vincule quem responde por ela na lista de lojas.</div>')+
+  (ehMatriz?(
   /* ==========================================================
-     O ACESSO DA UNIDADE NASCE AQUI
-     Antes, cadastrar a loja e criar quem entra nela eram duas telas
-     diferentes — e nenhuma era dona do cadastro inteiro. Agora a unidade
-     e o acesso dela saem do mesmo formulario, de uma vez.
+     A MATRIZ E A EXCECAO
+     Ela nasce junto com o admin geral da conta — nao faz sentido
+     separar em dois passos algo que ja existe combinado desde o
+     bootstrap. As demais lojas seguem o fluxo em duas etapas.
      ========================================================== */
   '<div class="mdSep"></div>'+
   '<b style="font-size:13px">Quem entra nesta loja</b>'+
@@ -39413,15 +39425,44 @@ function formSucursal(id){
    '<div class="fld2"><label>Senha</label>'+
     '<input id="scSenha" type="text" placeholder="'+
       (acessoDaSuc(s)?'deixe em branco para manter':'mínimo 6 caracteres')+'"></div>'+
-  '</div></div>','Salvar',async function(){
+  '</div>'):'')+
+  '</div>','Salvar',async function(){
     var nome=$('scNome').value.trim();
-    if(!nome){toast('Informe o nome da sucursal.');return false;}
-    var o={nome:nome,apelido:$('scApe').value.trim(),cnpj:$('scCnpj').value.trim(),
-      telefone:$('scTel').value.trim(),cidade:$('scCid').value.trim(),
-      uf:$('scUf').value.trim().toUpperCase(),ativa:$('scAtiva').checked,
-      mensalidade:Number(String($('scMens').value||'0').replace(/\./g,'').replace(',','.'))||0,
-      diaVenc:Math.min(28,Math.max(1,parseInt($('scVenc').value,10)||10)),
+    var apelido=$('scApe').value.trim();
+    var cnpj=$('scCnpj').value.trim();
+    var tel=$('scTel').value.trim();
+    var cid=$('scCid').value.trim();
+    var uf=$('scUf').value.trim().toUpperCase();
+    var mensTxt=($('scMens').value||'').trim();
+    var vencTxt=($('scVenc').value||'').trim();
+    if(!nome){toast('Informe o nome da loja.');return false;}
+    if(!apelido){toast('Informe o apelido da loja.');return false;}
+    if(!cnpj){toast('Informe o CNPJ da loja.');return false;}
+    if(!tel){toast('Informe o telefone da loja.');return false;}
+    if(!cid){toast('Informe a cidade da loja.');return false;}
+    if(!uf){toast('Informe a UF da loja.');return false;}
+    if(!mensTxt){toast('Informe a mensalidade da loja.');return false;}
+    if(!vencTxt){toast('Informe o dia de vencimento da loja.');return false;}
+    var o={nome:nome,apelido:apelido,cnpj:cnpj,
+      telefone:tel,cidade:cid,uf:uf,
+      ativa:s?$('scAtiva').checked:true,
+      mensalidade:Number(mensTxt.replace(/\./g,'').replace(',','.'))||0,
+      diaVenc:Math.min(28,Math.max(1,parseInt(vencTxt,10)||10)),
       cor:_corSuc||(s?s.cor:CORES_SUC[DB.sucursais.length%CORES_SUC.length])};
+
+    var alvo=s;
+    if(s)Object.assign(s,o);
+    else {alvo=Object.assign({id:uid('suc'),matriz:false},o);DB.sucursais.push(alvo);}
+    _corSuc='';
+    salvar();
+
+    if(!ehMatriz){
+      telaSucursais();
+      toast(s?'Loja salva.':'Loja cadastrada. Agora vincule o administrador dela na lista.');
+      return true;
+    }
+
+    /* daqui para baixo, só a matriz — fluxo combinado, como sempre foi */
     var mail=($('scMail').value||'').trim().toLowerCase();
     var senha=($('scSenha').value||'');
     var jaTem=acessoDaSuc(s);
@@ -39431,50 +39472,65 @@ function formSucursal(id){
       toast('Informe a senha do responsável (mínimo 6 caracteres).');return false;}
     if(senha&&senha.length<6){
       toast('A senha precisa ter ao menos 6 caracteres.');return false;}
-
-    var alvo=s;
-    if(s)Object.assign(s,o);
-    else {alvo=Object.assign({id:uid('suc'),matriz:false},o);DB.sucursais.push(alvo);}
-    _corSuc='';
-    salvar();
-
-    /* O acesso vai depois da unidade existir: ele aponta para ela.
-       Se o acesso falhar, a unidade FICA — desfazer o cadastro por causa
-       do login perderia tudo o que a pessoa digitou. */
-    /* ==========================================================
-       ACESSO SO E TOCADO SE ALGO NELE MUDOU
-       Editar a mensalidade da loja mandava o acesso junto, com a senha
-       vazia — e o servidor recusava, dizendo que a senha e curta demais.
-       Quem edita o cadastro da loja nao esta mexendo em senha nenhuma.
-       ========================================================== */
     var mexeuNoAcesso = mail && (!jaTem || senha ||
       String(jaTem.login||'').toLowerCase()!==mail);
     if(mexeuNoAcesso){
-      /* ==========================================================
-         A MATRIZ E A EXCECAO
-         O responsavel de uma filial responde por aquela loja. O da matriz
-         e a franqueadora: ela responde pela REDE. Prende-la a uma unidade
-         a rebaixa a gestora de unidade — foi assim que o banco passou a
-         recusar as gravacoes com 403 e travou a sincronizacao inteira.
-         Por isso a matriz grava sem unidade e com cargo de administrador.
-         ========================================================== */
       var er=await criarAcesso(NUVEM.loja,{
         nome:o.nome, email:mail, senha:senha,
-        cargo:alvo.matriz?'admin':'gerente',
-        sucursal_ref:alvo.matriz?'':alvo.id,
+        cargo:'admin',
+        sucursal_ref:'',
         perfil_id:(jaTem&&jaTem.perfilId)||''
       });
       if(er){
         telaSucursais();
-        painelErro('A unidade foi salva, mas o acesso não.',er);
+        painelErro('A loja foi salva, mas o acesso não.',er);
         return true;
       }
-      alvo.loginResp=mail;      /* fica registrado de quem e esta unidade */
+      alvo.loginResp=mail;
       salvar();
       if(NUVEM.ligada){try{await sincronizar()}catch(e){_quieto(e,'formSucursal')}}
     }
     telaSucursais();
-    toast(mexeuNoAcesso?'Sucursal e acesso salvos.':'Sucursal salva.');
+    toast(mexeuNoAcesso?'Loja e acesso salvos.':'Loja salva.');
+    return true;
+  },'lg');
+}
+/* ---------- vincular o primeiro administrador de uma loja já criada ---------- */
+function formVincularAdmin(id){
+  var s=DB.sucursais.find(function(x){return x.id===id});
+  if(!s)return;
+  modal('Vincular administrador — '+s.nome,
+  '<div class="mdB">'+
+   '<p class="hint" style="margin-bottom:14px">Esta loja fica pendente até ter um '+
+    'administrador. Ele vai enxergar só esta loja.</p>'+
+   '<div class="fld2"><label>Nome *</label><input id="vaNome" placeholder="nome do responsável"></div>'+
+   '<div class="row2" style="margin-top:12px">'+
+    '<div class="fld2" style="margin:0"><label>E-mail (login) *</label>'+
+     '<input id="vaMail" placeholder="responsavel@empresa.com"></div>'+
+    '<div class="fld2" style="margin:0"><label>Senha *</label>'+
+     '<input id="vaSenha" type="text" placeholder="mínimo 6 caracteres"></div>'+
+   '</div></div>','Vincular',async function(){
+    var nome=$('vaNome').value.trim();
+    var mail=($('vaMail').value||'').trim().toLowerCase();
+    var senha=($('vaSenha').value||'');
+    if(!nome){toast('Informe o nome do responsável.');return false;}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)){
+      toast('O login precisa ser um e-mail válido.');return false;}
+    if(senha.length<6){toast('A senha precisa ter ao menos 6 caracteres.');return false;}
+    var er=await criarAcesso(NUVEM.loja,{
+      nome:nome, email:mail, senha:senha,
+      cargo:'gerente', sucursal_ref:s.id, perfil_id:''
+    });
+    if(er){
+      telaSucursais();
+      painelErro('Não consegui vincular o administrador.',er);
+      return true;
+    }
+    s.loginResp=mail;
+    salvar();
+    if(NUVEM.ligada){try{await sincronizar()}catch(e){_quieto(e,'formVincularAdmin')}}
+    telaSucursais();
+    toast('Administrador vinculado — a loja está pronta para uso.');
     return true;
   },'lg');
 }
@@ -39500,7 +39556,7 @@ function acessoDaSuc(s){
 }
 async function excluirSucursal(id){
   var s=DB.sucursais.find(function(x){return x.id===id});
-  var ok=await confirmar({titulo:'Excluir a sucursal '+(s?s.nome:''),
+  var ok=await confirmar({titulo:'Excluir a loja '+(s?s.nome:''),
     texto:'As vendas já registradas continuam no histórico.',ok:'Excluir',tipo:'perigo'});
   if(!ok)return;
   DB.sucursais=DB.sucursais.filter(function(x){return x.id!==id});
@@ -39916,8 +39972,8 @@ function explicaFaturamento(){
    ['Ticket salão','mesma conta para as vendas no salão e balcão'],
    ['Ticket ficha','ticket médio de tudo que não é entrega — é a venda de frente de caixa'],
    ['Representatividade','peso de cada loja no faturamento total do período'],
-   ['Gráfico por loja','faturamento de cada unidade, na cor cadastrada da sucursal']
-  ],'os pedidos do PDV de cada sucursal, no período escolhido.',
+   ['Gráfico por loja','faturamento de cada unidade, na cor cadastrada da loja']
+  ],'os pedidos do PDV de cada loja, no período escolhido.',
    'pedidos cancelados e sucursais desmarcadas no filtro.');
 }
 
@@ -45777,7 +45833,7 @@ function abaLojasUsr(u,sucs){
    'Sem marcar nenhuma, ele vê todas — use isso só para quem é da matriz.</div>'+
    '<label class="chkL" style="margin-bottom:10px"><input type="checkbox" '+(todas?'checked':'')+
     ' onchange="todasLojasUsr(this.checked)"><span><b>Todas as lojas</b>'+
-    '<span>acesso a qualquer sucursal, inclusive as futuras</span></span></label>'+
+    '<span>acesso a qualquer loja, inclusive as futuras</span></span></label>'+
    '<div class="lojaChk">'+sucs.map(function(s){
      var on=todas||(u.sucursais||[]).indexOf(s.id)>=0;
      return '<label class="chkL'+(todas?' bloq':'')+'">'+
