@@ -16,7 +16,7 @@ const ADMIN = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
    o seu domínio próprio). Sem isso, o navegador vai bloquear a criação
    de usuário por CORS. */
 const ORIGENS = [
-  "https://nexalytix-systems.github.io/NexalytixERP",
+  "https://nexalytix-systems.github.io",
   "http://localhost:3000",
   "http://127.0.0.1:5500",
 ];

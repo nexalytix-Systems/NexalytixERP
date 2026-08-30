@@ -16611,7 +16611,7 @@ function trocarLoja(id){
 }
 function fecharSuc(){$('sucBox').innerHTML='';}
 var DIAS_JANELA=90;   /* dias de historico baixados no login */
-var VERSAO='V107.0.0';
+var VERSAO='beta1';
 /* confere se há versão nova publicada e avisa, sem forçar nada */
 /* location.reload(true) não força mais nada nos navegadores atuais:
    o arquivo antigo continua vindo do cache. Recarregar com um endereço
@@ -16627,7 +16627,7 @@ async function checarVersao(){
   try{
     var r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});
     var t=await r.text();
-    var m=t.match(/var VERSAO='(V[0-9.]+)'/);
+    var m=t.match(/var VERSAO='([^']+)'/);
     if(!m)return;
     if(m[1]!==VERSAO){
       var el=document.getElementById('avisoVer');
@@ -23344,7 +23344,7 @@ function abrirCaixa(){
   modal('Abrir frente de caixa',h,'Abrir caixa',function(){
     var opId=$('cxOp').value;
     if(!opId){toast('Selecione quem está abrindo o caixa.');return false;}
-    var op=(DB.operadores||[]).find(function(o){return o.id===opId});
+    var op=ops.find(function(o){return o.id===opId});
     if(!op){toast('Operador não encontrado.');return false;}
     if(op.senha){
       var s1=($('cxSenha')||{}).value||'';
@@ -23374,7 +23374,7 @@ function pedeSenhaCaixa(pref){
   var sel=$(pref+'Op');
   var box=$('boxSenha'+(pref==='cx'?'Cx':'Fc'));
   if(!sel||!box)return;
-  var op=(DB.operadores||[]).find(function(o){return o.id===sel.value});
+  var op=operAtivos().find(function(o){return o.id===sel.value});
   box.style.display=(op&&op.senha)?'':'none';
   if(op&&op.senha){
     var i=$(pref+'Senha');
@@ -23459,7 +23459,7 @@ function fecharCaixa(){
   modal('Fechamento de caixa',h,'Confirmar fechamento',function(){
     var fcId=($('fcOp')||{}).value||'';
     if(!fcId){toast('Selecione quem está fechando o caixa.');return false;}
-    var opF=(DB.operadores||[]).find(function(o){return o.id===fcId});
+    var opF=operAtivos().find(function(o){return o.id===fcId});
     if(!opF){toast('Operador não encontrado.');return false;}
     if(opF.senha){
       var sf=($('fcSenha')||{}).value||'';
@@ -45386,7 +45386,7 @@ function telaUsuarios(){
      ========================================================== */
   var lista=DB.usuarios.filter(function(u){
     if(u.ativo===false&&!US.verInativos&&US.sel!==u.id)return false;
-    if(String(u.login||'').toLowerCase().indexOf(ADM_MESTRE)===0&&!ehPlataforma(eu))return false;
+    if(ADM_MESTRE&&String(u.login||'').toLowerCase().indexOf(ADM_MESTRE)===0&&!ehPlataforma(eu))return false;
     if(u.plataforma&&!ehPlataforma(eu))return false;
     /* franqueadora ve so os acessos da propria rede */
     if(minhaRede){
