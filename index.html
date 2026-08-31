@@ -12548,7 +12548,8 @@ var MOD=[
 {id:'loja',n:'Configuração da Loja',ic:'store',it:[
  {id:'cfg-loja',n:'Mapa do Sistema'},
  {id:'carga-inicial',n:'Importar Dados'},
- {id:'cfg-sucursais',n:'Sucursais da Franquia'},
+ {id:'cfg-sucursais',n:'Lojas da Franquia'},
+ {id:'cfg-planos',n:'Planos de Mensalidade'},
  {id:'liberacao',n:'Liberação por Unidade'},
 
  {id:'cfg-pdv',n:'Configuração do PDV'},
@@ -13707,6 +13708,7 @@ var MAPA=[
   campos:function(x){return {nome:x.nome,apelido:x.apelido||null,cnpj:x.cnpj||null,
     telefone:x.telefone||null,cidade:x.cidade||null,uf:x.uf||null,
     matriz:!!x.matriz,ativa:x.ativa!==false,
+    plano_id:x.planoId||null,
     mensalidade:n(x.mensalidade),dia_vencimento:x.diaVenc||null,
     /* ==========================================================
        REATIVAR UMA UNIDADE TEM DE APAGAR A MARCA DE EXCLUIDA
@@ -13724,6 +13726,11 @@ var MAPA=[
        envio acontece antes do download, entao o vazio venceria sempre. */
     login_responsavel:(x.loginResp||undefined),
     rede_id:x.redeId||null,rede_nome:x.redeNome||null}}},
+
+ {col:'planos', espelha:true, tab:'planos_franquia',
+  campos:function(x,i){return {nome:x.nome,valor:n(x.valor),
+    criterio_tipo:x.criterioTipo||null,criterio_limite:x.criterioLimite||0,
+    ativo:x.ativo!==false,ordem:i}}},
 
  {col:'ordensProd',  tab:'ordens_producao',
   campos:function(x){return {numero:x.numero||null,data:x.data||null,hora:x.hora||null,
@@ -13998,7 +14005,7 @@ function igualarChaves(linhas){
 var _TABS_SEM_LOJA=['ficha_itens','opcoes','produto_grupos','pedido_itens',
  'pedido_pagamentos','entregador_taxas','caixa_movimentos','areas_zonas',
  'subcategorias_financeiras','usuario_permissoes','usuario_sucursais',
- 'sucursal_permissoes'];
+ 'sucursal_permissoes','planos_franquia'];
 function chaveConflito(tab){
   return (_TABS_SEM_LOJA.indexOf(tab)>=0)?'ref_local':'loja_id,ref_local';
 }
@@ -15549,9 +15556,15 @@ function volta(linhas,fn,atual,col){
   DB.sucursais=volta(sc,function(x){return {id:x.ref_local||x.id,nome:x.nome,
     apelido:x.apelido||'',cnpj:x.cnpj||'',telefone:x.telefone||'',cidade:x.cidade||'',
     uf:x.uf||'',matriz:!!x.matriz,ativa:x.ativa!==false,cor:x.cor||'#00A08B',
-    loginResp:x.login_responsavel||'',
+    loginResp:x.login_responsavel||'',planoId:x.plano_id||'',
     mensalidade:Number(x.mensalidade)||0,diaVenc:x.dia_vencimento||null,
     redeId:x.rede_id||'',redeNome:x.rede_nome||''}},null,'sucursais');
+
+  var pl=await baixarTab('planos_franquia', 'planos_franquia'+qs+'&order=ordem.asc');
+  DB.planos=volta(pl,function(x){return {id:x.ref_local||x.id,nome:x.nome,
+    valor:Number(x.valor)||0,criterioTipo:x.criterio_tipo||'',
+    criterioLimite:x.criterio_limite||0,ativo:x.ativo!==false,ordem:x.ordem||0}},null,'planos');
+  basePlanos();
 
   var op=await baixarTab('ordens_producao', 'ordens_producao'+qs+'&order=data.desc&limit=1000');
   DB.ordensProd=volta(op,function(x){return {id:x.ref_local||x.id,numero:x.numero,
@@ -15935,6 +15948,41 @@ function E(t){return String(t==null?'':t)
   .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
   .replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 function money(v){return Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
+/* ---------- máscaras de campo (Brasil) ---------- */
+function mascaraCnpj(v){
+  v=String(v||'').replace(/\D/g,'').slice(0,14);
+  v=v.replace(/^(\d{2})(\d)/,'$1.$2');
+  v=v.replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3');
+  v=v.replace(/\.(\d{3})(\d)/,'.$1/$2');
+  v=v.replace(/(\d{4})(\d)/,'$1-$2');
+  return v;
+}
+function mascaraTelefone(v){
+  v=String(v||'').replace(/\D/g,'').slice(0,11);
+  if(v.length>10)return v.replace(/^(\d{2})(\d{5})(\d{0,4}).*/,'($1) $2-$3').replace(/-$/,'');
+  if(v.length>5)return v.replace(/^(\d{2})(\d{4})(\d{0,4}).*/,'($1) $2-$3').replace(/-$/,'');
+  if(v.length>2)return v.replace(/^(\d{2})(\d{0,5}).*/,'($1) $2');
+  return v.replace(/^(\d*)/,'($1');
+}
+function mascaraCep(v){
+  v=String(v||'').replace(/\D/g,'').slice(0,8);
+  return v.replace(/^(\d{5})(\d)/,'$1-$2');
+}
+/* consulta o CEP no ViaCEP e preenche cidade/UF sozinho — poupa digitação
+   e evita cidade/estado escritos errado, já que aqui é sempre Brasil */
+async function buscarCep(inputId,cidId,ufId){
+  var cepEl=$(inputId);
+  if(!cepEl)return;
+  var cep=cepEl.value.replace(/\D/g,'');
+  if(cep.length!==8)return;
+  try{
+    var r=await fetch('https://viacep.com.br/ws/'+cep+'/json/');
+    var j=await r.json();
+    if(j.erro){toast('CEP não encontrado.');return;}
+    if($(cidId))$(cidId).value=j.localidade||'';
+    if($(ufId))$(ufId).value=j.uf||'';
+  }catch(e){_quieto(e,'buscarCep')}
+}
 function toast(m){var o=$('ts');if(o)o.remove();var d=document.createElement('div');
 d.className='toast';d.id='ts';d.textContent=m;document.body.appendChild(d);
 setTimeout(function(){if(d.parentNode)d.remove()},2400);}
@@ -17007,6 +17055,7 @@ if(mid==='relatorios'&&iid==='vendas-periodo')return telaVendasPeriodo();
 if(mid==='relatorios'&&iid==='dre')return telaDRE();
 if(mid==='loja'&&iid==='cfg-dre')return telaCfgDRE();
 if(mid==='loja'&&iid==='cfg-sucursais')return telaSucursais();
+if(mid==='loja'&&iid==='cfg-planos')return telaPlanos();
 if(mid==='loja'&&iid==='areas-entrega')return telaAreasEntrega();
 if(mid==='loja'&&iid==='canais-integracao')return telaCanaisIntegracao();
 if(mid==='loja'&&iid==='cfg-gerente')return telaGerente();
@@ -18382,6 +18431,109 @@ var TIPOS_PG=[
  {id:'outro',n:'Outros'}
 ];
 var BANDEIRAS=['—','Visa','Mastercard','Elo','American Express','Hipercard','Alelo','Sodexo','Ticket','VR','Ifood','Outra'];
+/* ---------- planos de mensalidade da franquia ----------
+   Antes era um campo de texto livre dentro do cadastro da loja — cada
+   unidade digitava (ou copiava) um valor solto, sem nenhum registro do
+   que aquele valor representava. Agora é cadastro próprio: nome, valor,
+   e o critério que justifica a faixa (ex.: até X habitantes da cidade,
+   até X moradores do condomínio) — a loja PASSA A ESCOLHER um plano
+   já cadastrado, não digita mais o valor na mão. */
+function basePlanos(){
+  if(!DB.planos||!DB.planos.length){
+    DB.planos=[
+      {id:'plano_start',nome:'Start',valor:30000,criterioTipo:'Habitantes da cidade',criterioLimite:20000,ativo:true,ordem:0},
+      {id:'plano_profissional',nome:'Profissional',valor:50000,criterioTipo:'Habitantes da cidade',criterioLimite:100000,ativo:true,ordem:1},
+      {id:'plano_premium',nome:'Premium',valor:100000,criterioTipo:'Habitantes da cidade',criterioLimite:0,ativo:true,ordem:2}
+    ];
+  }
+}
+function planosAtivos(){
+  basePlanos();
+  return (DB.planos||[]).filter(function(p){return p.ativo!==false})
+    .sort(function(a,b){return (a.ordem||0)-(b.ordem||0)});
+}
+function telaPlanos(){
+  basePlanos();
+  var l=(DB.planos||[]).slice().sort(function(a,b){return (a.ordem||0)-(b.ordem||0)});
+  $('content').innerHTML='<div class="etWrap"><div class="etScroll">'+
+   '<div class="etTopo">'+
+    '<div><h1>Planos de Mensalidade</h1><p>O valor que cada loja paga, por faixa. '+
+     'A loja escolhe um destes ao ser cadastrada.</p></div>'+
+    '<div style="flex:1"></div>'+
+    '<button class="btnP2 ok" onclick="formPlano()">'+sv('plus',14)+' Novo plano</button>'+
+   '</div>'+
+   '<div class="etTabW plano2">'+
+   '<table class="etTab semBusca"><thead><tr>'+
+    '<th>Plano</th><th style="width:150px;text-align:right">Mensalidade</th>'+
+    '<th>Critério</th><th style="width:100px;text-align:center">Situação</th>'+
+    '<th style="width:90px"></th></tr></thead><tbody>'+
+   l.map(function(p){
+     return '<tr>'+
+     '<td><b>'+E(p.nome)+'</b></td>'+
+     '<td style="text-align:right">R$ '+money(p.valor)+'</td>'+
+     '<td>'+(p.criterioLimite?('Até '+Number(p.criterioLimite).toLocaleString('pt-BR')+' '+E(p.criterioTipo||'')):
+       (p.criterioTipo?E(p.criterioTipo):'Sem limite'))+'</td>'+
+     '<td style="text-align:center">'+(p.ativo!==false
+       ?'<span class="badge2">Ativo</span>':'<span class="badge2 rd">Inativo</span>')+'</td>'+
+     '<td><div class="rowAct">'+
+      '<button class="rBtn" onclick="formPlano(\''+p.id+'\')">'+sv('edit',12)+'</button>'+
+      '<button class="rBtn rd" onclick="excluirPlano(\''+p.id+'\')">'+sv('trash',12)+'</button>'+
+     '</div></td></tr>';
+   }).join('')+'</tbody></table></div></div></div>';
+  rodape(l.length+' planos');
+}
+function formPlano(id){
+  basePlanos();
+  var p=id?DB.planos.find(function(x){return x.id===id}):null;
+  modal(p?'Editar plano':'Novo plano',
+  '<div class="mdB"><div class="row2">'+
+   '<div class="fld2"><label>Nome do plano *</label>'+
+    '<input id="plNome" value="'+E(p?p.nome:'')+'" placeholder="Ex.: Start"></div>'+
+   '<div class="fld2"><label>Mensalidade (R$) *</label>'+
+    '<input id="plValor" value="'+E(p&&p.valor?String(p.valor).replace('.',','):'')+'" placeholder="0,00"></div>'+
+  '</div><div class="row2">'+
+   '<div class="fld2"><label>Critério (tipo)</label>'+
+    '<input id="plTipo" value="'+E(p?p.criterioTipo:'')+'" '+
+    'placeholder="Ex.: Habitantes da cidade, Moradores do condomínio"></div>'+
+   '<div class="fld2"><label>Até quanto (0 = sem limite)</label>'+
+    '<input id="plLimite" type="number" min="0" value="'+E(p&&p.criterioLimite?p.criterioLimite:0)+'"></div>'+
+  '</div>'+
+  (p?'<div class="row2"><div class="fld2"><label>&nbsp;</label>'+
+   '<label class="chkL"><input type="checkbox" id="plAtivo" '+(p.ativo!==false?'checked':'')+'>'+
+   '<span>Plano ativo</span></label></div><div class="fld2"></div></div>':'')+
+  '</div>','Salvar',function(){
+    var nome=$('plNome').value.trim();
+    var valorTxt=($('plValor').value||'').trim();
+    if(!nome){toast('Informe o nome do plano.');return false;}
+    if(!valorTxt){toast('Informe a mensalidade do plano.');return false;}
+    var o={nome:nome,
+      valor:Number(valorTxt.replace(/\./g,'').replace(',','.'))||0,
+      criterioTipo:$('plTipo').value.trim(),
+      criterioLimite:parseInt($('plLimite').value,10)||0,
+      ativo:p?$('plAtivo').checked:true};
+    if(p)Object.assign(p,o);
+    else DB.planos.push(Object.assign({id:uid('plano'),ordem:DB.planos.length},o));
+    salvar();
+    telaPlanos();
+    toast('Plano salvo.');
+    return true;
+  },'md');
+}
+function excluirPlano(id){
+  var p=(DB.planos||[]).find(function(x){return x.id===id});
+  if(!p)return;
+  var emUso=(DB.sucursais||[]).some(function(s){return s.planoId===id});
+  if(emUso){toast('Este plano está em uso por alguma loja — desative em vez de excluir.');return;}
+  confirmar({titulo:'Excluir o plano "'+p.nome+'"?',
+    texto:'Isso não afeta lojas já cadastradas com outro plano.',
+    tipo:'perigo',ok:'Excluir'}).then(function(ok){
+    if(!ok)return;
+    DB.planos=DB.planos.filter(function(x){return x.id!==id});
+    salvar();
+    telaPlanos();
+    toast('Plano excluído.');
+  });
+}
 function baseFormas(){
   if(!DB.formasPag||!DB.formasPag.length){
     DB.formasPag=[
@@ -20471,7 +20623,7 @@ function telaTransferencia(){
     $('content').innerHTML='<div class="construWrap"><div class="construBox">'+
      '<div class="construIc">'+sv('troca',30)+'</div><b>Só existe uma unidade</b>'+
      '<p>A transferência serve para mover mercadoria entre unidades da mesma rede. '+
-     'Cadastre outra em Configuração da Loja › Sucursais da Franquia.</p></div></div>';
+     'Cadastre outra em Configuração da Loja › Lojas da Franquia.</p></div></div>';
     rodape('uma unidade');return;
   }
 
@@ -27839,7 +27991,7 @@ function ctDados(){
     ctLinha('Notas de entrada',String((DB.notas||[]).length))+
     ctLinha('Lançamentos financeiros',String((DB.lancFin||[]).length))+
     ctLinha('Pedidos',String((DB.pedidos||[]).length))+
-    ctLinha('Sucursais',String((DB.sucursais||[]).length))+
+    ctLinha('Lojas',String((DB.sucursais||[]).length))+
     ctLinha('Usuários',String((DB.usuarios||[]).length)))+
 
    ctCard('Como a nuvem separa as lojas','o que impede uma ver a outra',
@@ -31000,7 +31152,7 @@ function modalFicha(id){
     '<div class="fld2" style="margin:0"><label>CST / CSOSN</label><input id="ftCs" value="'+E(f?f.cst:'')+'"></div>'+
     '<div class="fld2" style="margin:0"><label>Alíquota (%)</label><input id="ftAl" type="number" step="0.01" value="'+(f?(f.aliquota||0):0)+'"></div>'+
    '</div></div>'+
-   '<div class="blk" style="margin:0;max-width:none"><h3>Sucursais</h3>'+
+   '<div class="blk" style="margin:0;max-width:none"><h3>Lojas</h3>'+
    '<div class="contaGrid">'+(DB.lojasFin||[]).map(function(l){
      var marc=f?((f.lojas||[]).indexOf(l.id)>=0):true;
      return '<label class="contaBox"><input type="checkbox" class="ftL" value="'+l.id+'"'+(marc?' checked':'')+'>'+
@@ -31219,7 +31371,7 @@ function desenhaComp(){
     '<div class="tSep2"></div>'+
     '<button class="btnP2" onclick="fecharComp()">Cancelar</button>'+
     '<button class="btnP2 ok" onclick="salvarComposicao()">Salvar</button>'+
-    '<div class="fmSuc"><label>Sucursais</label><select onchange="FT.loja=this.value">'+
+    '<div class="fmSuc"><label>Lojas</label><select onchange="FT.loja=this.value">'+
      (DB.lojasFin||[]).map(function(l){return '<option value="'+l.id+'"'+(FT.loja===l.id?' selected':'')+'>'+E(l.nome)+'</option>'}).join('')+
     '</select></div>'+
     '<button class="btnP2" onclick="imprimirFicha(\''+f.id+'\')">Imprimir</button>'+
@@ -31768,7 +31920,7 @@ function modalMotivo(id){
   '<label class="chkL"><input type="checkbox" id="mtA" '+(!m||m.ativo!==false?'checked':'')+'>'+
   '<span>Ativo<small style="display:block;color:var(--ink-3)">aparece na lista ao lançar movimentação</small></span></label>'+
   '</div>'+
-  '<div class="blk" style="margin:11px 0 0;max-width:none"><h3>Sucursais que enxergam este motivo</h3>'+
+  '<div class="blk" style="margin:11px 0 0;max-width:none"><h3>Lojas que enxergam este motivo</h3>'+
   '<div class="hint" style="margin-bottom:10px">Nenhuma marcada significa que o motivo vale para todas as lojas.</div>'+
   '<div class="contaGrid">'+lojasCad().map(function(l){
     return '<label class="contaBox"><input type="checkbox" class="mtL" value="'+l.id+'"'+
@@ -39379,15 +39531,25 @@ function formSucursal(id){
    '<div class="fld2"><label>Nome *</label><input id="scNome" value="'+E(s?s.nome:'')+'" placeholder="Ex.: Loja Centro"></div>'+
    '<div class="fld2"><label>Apelido *</label><input id="scApe" value="'+E(s?s.apelido:'')+'" placeholder="Centro"></div>'+
   '</div><div class="row2">'+
-   '<div class="fld2"><label>CNPJ *</label><input id="scCnpj" value="'+E(s?s.cnpj:'')+'"></div>'+
-   '<div class="fld2"><label>Telefone *</label><input id="scTel" value="'+E(s?s.telefone:'')+'"></div>'+
+   '<div class="fld2"><label>CNPJ *</label><input id="scCnpj" value="'+E(s?s.cnpj:'')+'" '+
+    'maxlength="18" placeholder="00.000.000/0000-00" oninput="this.value=mascaraCnpj(this.value)"></div>'+
+   '<div class="fld2"><label>Telefone *</label><input id="scTel" value="'+E(s?s.telefone:'')+'" '+
+    'maxlength="15" placeholder="(00) 00000-0000" oninput="this.value=mascaraTelefone(this.value)"></div>'+
+  '</div><div class="row2">'+
+   '<div class="fld2"><label>CEP</label><input id="scCep" value="" '+
+    'maxlength="9" placeholder="00000-000" oninput="this.value=mascaraCep(this.value)" '+
+    'onblur="buscarCep(\'scCep\',\'scCid\',\'scUf\')"></div>'+
+   '<div class="fld2"></div>'+
   '</div><div class="row2">'+
    '<div class="fld2"><label>Cidade *</label><input id="scCid" value="'+E(s?s.cidade:'')+'"></div>'+
    '<div class="fld2"><label>UF *</label><input id="scUf" maxlength="2" value="'+E(s?s.uf:'')+'"></div>'+
   '</div><div class="row2">'+
-   '<div class="fld2"><label>Mensalidade (R$) *</label>'+
-    '<input id="scMens" value="'+E(s&&s.mensalidade?String(s.mensalidade).replace('.',','):'')+'" '+
-    'placeholder="0,00"></div>'+
+   '<div class="fld2"><label>Plano de mensalidade *</label><select id="scPlano">'+
+    '<option value="">Selecione</option>'+
+    planosAtivos().map(function(p){
+      return '<option value="'+E(p.id)+'"'+((s&&s.planoId===p.id)?' selected':'')+'>'+
+        E(p.nome)+' — R$ '+money(p.valor)+'</option>';
+    }).join('')+'</select></div>'+
    '<div class="fld2"><label>Dia do vencimento *</label>'+
     '<input id="scVenc" type="number" min="1" max="28" value="'+E(s&&s.diaVenc?s.diaVenc:'')+'" '+
     'placeholder="10"></div>'+
@@ -39433,7 +39595,7 @@ function formSucursal(id){
     var tel=$('scTel').value.trim();
     var cid=$('scCid').value.trim();
     var uf=$('scUf').value.trim().toUpperCase();
-    var mensTxt=($('scMens').value||'').trim();
+    var planoId=$('scPlano').value;
     var vencTxt=($('scVenc').value||'').trim();
     if(!nome){toast('Informe o nome da loja.');return false;}
     if(!apelido){toast('Informe o apelido da loja.');return false;}
@@ -39441,12 +39603,14 @@ function formSucursal(id){
     if(!tel){toast('Informe o telefone da loja.');return false;}
     if(!cid){toast('Informe a cidade da loja.');return false;}
     if(!uf){toast('Informe a UF da loja.');return false;}
-    if(!mensTxt){toast('Informe a mensalidade da loja.');return false;}
+    if(!planoId){toast('Selecione o plano de mensalidade da loja.');return false;}
     if(!vencTxt){toast('Informe o dia de vencimento da loja.');return false;}
+    var plano=(DB.planos||[]).find(function(x){return x.id===planoId});
     var o={nome:nome,apelido:apelido,cnpj:cnpj,
       telefone:tel,cidade:cid,uf:uf,
       ativa:s?$('scAtiva').checked:true,
-      mensalidade:Number(mensTxt.replace(/\./g,'').replace(',','.'))||0,
+      planoId:planoId,
+      mensalidade:(plano&&plano.valor)||0,
       diaVenc:Math.min(28,Math.max(1,parseInt(vencTxt,10)||10)),
       cor:_corSuc||(s?s.cor:CORES_SUC[DB.sucursais.length%CORES_SUC.length])};
 
@@ -39495,44 +39659,50 @@ function formSucursal(id){
     return true;
   },'lg');
 }
-/* ---------- vincular o primeiro administrador de uma loja já criada ---------- */
+/* ---------- vincular o primeiro administrador de uma loja já criada ----------
+   Antes esse formulario criava um usuario novo na hora. Agora so oferece
+   quem ja existe em Usuarios e Permissoes — cadastrar gente nova continua
+   sendo trabalho daquela tela, nao desta. */
 function formVincularAdmin(id){
   var s=DB.sucursais.find(function(x){return x.id===id});
   if(!s)return;
+  var candidatos=(DB.usuarios||[]).filter(function(u){
+    return u.ativo!==false && !u.mestre && !u.plataforma &&
+      (u.sucursais||[]).indexOf(s.id)<0;
+  });
+  if(!candidatos.length){
+    modal('Vincular administrador — '+s.nome,
+    '<div class="mdB"><p class="hint">Não existe nenhum usuário disponível ainda. '+
+     'Cadastre a pessoa primeiro em <b>Configuração da Loja › Usuários e '+
+     'Permissões</b>, depois volte aqui para vincular.</p></div>',
+    'Ir para Usuários',function(){ _abrirTela('loja','usuarios-permissoes'); return true; },'md');
+    return;
+  }
   modal('Vincular administrador — '+s.nome,
   '<div class="mdB">'+
    '<p class="hint" style="margin-bottom:14px">Esta loja fica pendente até ter um '+
-    'administrador. Ele vai enxergar só esta loja.</p>'+
-   '<div class="fld2"><label>Nome *</label><input id="vaNome" placeholder="nome do responsável"></div>'+
-   '<div class="row2" style="margin-top:12px">'+
-    '<div class="fld2" style="margin:0"><label>E-mail (login) *</label>'+
-     '<input id="vaMail" placeholder="responsavel@empresa.com"></div>'+
-    '<div class="fld2" style="margin:0"><label>Senha *</label>'+
-     '<input id="vaSenha" type="text" placeholder="mínimo 6 caracteres"></div>'+
-   '</div></div>','Vincular',async function(){
-    var nome=$('vaNome').value.trim();
-    var mail=($('vaMail').value||'').trim().toLowerCase();
-    var senha=($('vaSenha').value||'');
-    if(!nome){toast('Informe o nome do responsável.');return false;}
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)){
-      toast('O login precisa ser um e-mail válido.');return false;}
-    if(senha.length<6){toast('A senha precisa ter ao menos 6 caracteres.');return false;}
-    var er=await criarAcesso(NUVEM.loja,{
-      nome:nome, email:mail, senha:senha,
-      cargo:'gerente', sucursal_ref:s.id, perfil_id:''
-    });
-    if(er){
-      telaSucursais();
-      painelErro('Não consegui vincular o administrador.',er);
-      return true;
-    }
-    s.loginResp=mail;
+    'administrador vinculado. Escolha entre quem já está cadastrado no sistema.</p>'+
+   '<div class="fld2"><label>Usuário *</label><select id="vaUsr">'+
+    '<option value="">Selecione</option>'+
+    candidatos.map(function(u){
+      return '<option value="'+E(u.id)+'">'+E(u.nome)+' — '+E(u.login)+'</option>';
+    }).join('')+
+   '</select></div>'+
+   '<p class="hint" style="margin-top:10px">Não achou quem procura? '+
+    'Cadastre em Configuração da Loja › Usuários e Permissões e volte aqui.</p>'+
+  '</div>','Vincular',async function(){
+    var uid2=$('vaUsr').value;
+    if(!uid2){toast('Selecione um usuário.');return false;}
+    var u=(DB.usuarios||[]).find(function(x){return x.id===uid2});
+    if(!u){toast('Usuário não encontrado.');return false;}
+    u.sucursais=u.sucursais||[];
+    if(u.sucursais.indexOf(s.id)<0)u.sucursais.push(s.id);
+    s.loginResp=u.login;
     salvar();
-    if(NUVEM.ligada){try{await sincronizar()}catch(e){_quieto(e,'formVincularAdmin')}}
     telaSucursais();
     toast('Administrador vinculado — a loja está pronta para uso.');
     return true;
-  },'lg');
+  },'md');
 }
 var _corSuc='';
 /* qual acesso pertence a esta unidade — o formulario precisa saber se
@@ -39637,7 +39807,7 @@ function seletorCanal(id,arr,onTog,onTodos){
     CANAIS_REL.map(function(c){return {id:c.id,nome:c.n}}),arr,onTog,onTodos);
 }
 function seletorSuc(id,arr,onTog,onTodos){
-  return selMulti(id,'Sucursais',
+  return selMulti(id,'Lojas',
     sucAtivas().map(function(s){return {id:s.id,nome:s.nome}}),arr,onTog,onTodos);
 }
 function diasEntre(de,ate){
@@ -40106,7 +40276,7 @@ function explicaDataHora(){
    ['Melhor horário','a hora que mais faturou — útil para escalar equipe'],
    ['Média por dia da semana','faturamento total daquele dia dividido por quantas vezes ele apareceu no período'],
    ['Melhor dia','o dia da semana com maior média, não com maior total'],
-   ['Sucursais','com várias marcadas, os números somam; com uma só, mostra o comportamento dela']
+   ['Lojas','com várias marcadas, os números somam; com uma só, mostra o comportamento dela']
   ],'a data e a hora gravadas em cada pedido no momento da venda.',
    'pedidos cancelados e pedidos sem hora registrada.');
 }
@@ -45691,7 +45861,7 @@ function detalheUsuario(){
       var _s=(DB.sucursais||[]).find(function(x){
         var a=acessoDaSuc(x); return a&&a.id===u.id;});
       if(_s)return '<button class="btnP2" onclick="formSucursal(\''+_s.id+'\')">'+
-        sv('edit',12)+' Editar em Sucursais</button>';
+        sv('edit',12)+' Editar em Lojas</button>';
       return '<button class="btnP2" onclick="editarUsuario()">'+sv('edit',12)+' Editar</button>';
     })())+
     (u.mestre?'':'<button class="btnP2 rdB" onclick="excluirUsuario()">'+sv('trash',12)+'</button>')+
